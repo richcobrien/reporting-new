@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="../report_tool_components/css/style.css">
+
+<div class="divL">
+	<div class="vertDiv">
+		<div class="textDiv"><h4>New Query<iron-icon icon='icons:add'></iron-icon><h4></div>
+	</div>
+</div>
+	
+<div class="queryDiv">
+<div class="div2">
+	<div class="div1">
+		<button ng-click="toggle()" ng-class="{on:b.state}" ng-repeat="b in buttons">{{b.label}}</button>
+	</div>
+
+ 	<div class="form-group div3">
+    		<input type="email" class="form-control" id="query" value="Query5">
+ 	 </div>
+</div>
+	<div class="row padded formBack" style="display:{{buttons[0].style}};">
+		<div class="form-group">
+			<div class="formDiv50 divP">
+    				<div class="formDiv25"><label for="connection">Connection</label></div>
+    				<div class="formDiv75"><input class="form-control" id="connection"  placeholder="Connection1"></div>
+			</div>
+			<div class="formDiv50">
+    				<div class="formDiv25"><label for="database" class="divP">Database</label></div>
+    				<div class="formDiv75">                                        
+					  
+						<select ng-model="selectedSchema" ng-change="changeInSchema()" ng-options="value for value in schema"  class="form-control" id="sel3">
+    						</select>
+          				
+				</div>
+			</div>
+  		</div>
+		
+
+
+
+schema:<select ng-model="selectedSchema" ng-change="changeInSchema()" ng-options="value for value in schema" class="form-control" id="sel3">
+</select><br>
+db:<select ng-model="selectedDb" ng-change="changeInDb()" ng-options="value for value in optionalDb" multiple>
+</select>
+Attribute:<select id="attry" ng-model="selectedAttribute" ng-change="changeInAttribute()" ng-options="value.attry for value in optionalAttribute" multiple>
+</select><br>
+Where:<select ng-model="selectedWhereAttr" ng-change="changeInWhereAttr()" ng-options="value.attry for value in selectedAttribute">
+</select>
+<select ng-model="selectedCondition" ng-options="value for value in conditions">
+</select>
+<input type="{{typeOffiels}}" ng-model="conditionValue" />
+<hr>
+<textarea ng-model="textQuery" col=100>select {{attrAsString}} from {{dbAsString}} where {{selectedWhereAttr.attry}} {{selectedCondition}} {{conditionValue}}</textarea>
+	</div>
+	<div class="row padded formBack" style="display:{{buttons[1].style}};">fff
+	</div>
+</div>
+	
+
+
+
+

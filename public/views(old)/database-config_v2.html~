@@ -1,0 +1,185 @@
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="../report_tool_components/css/style_DBbrowser_v2.css" />
+<body>
+
+<div id="parent" class="col-sm-12 " ng-controller="DBController_v2">
+<div class="row" id="main"  >
+
+<div id="frame1" class="col-sm-3 text-center container-fluid" >
+ <!--<div class="container-fluid">-->
+<div>
+<div id="heading1">
+<!--<label id="label1" class="label label-default">Add New Connection</label>-->
+<button id="newConnButton" type="button" class="btn btn-default"  ng-click="reset()">Add New Connection</button>
+</div>
+<div id="body" data-ng-init="initConnection()">
+<span ng-repeat="connection in connections">
+<button id="conn_button" class="button"  ng-click="select_db(connection.connectionName)">
+<span id="gly1" class="glyphicon glyphicon-folder-open"></span>{{ connection.connectionName }}</button>
+</span>
+</div>
+</div>
+</div>
+<div id="frame2" class="col-sm-9 "container-fluid" " >
+ <div class="container-fluid">
+<div id="heading2">
+<span id="head"> {{ title }} </span>
+</div>
+<div id="connection">
+<div class="col-md-12">
+			<form class="form-horizontal" role="form">
+				
+                                <div class="form-group">
+					 
+					<label for="ConnName" class="col-sm-2 control-label">
+						Connection Name
+					</label>
+					<div class="col-sm-6">
+						<input type="Name" class="form-control" id="ConnName" ng-model="newconn.connectionName" />
+					</div>
+				</div>
+                                <div class="form-group">
+					 
+					<label for="UserName" class="col-sm-2 control-label">
+						Username
+					</label>
+					<div class="col-sm-6">
+						<input type="UserName" class="form-control" id="UserName" ng-model="newconn.username" />
+					</div>
+				</div>
+				<div class="form-group">
+					 
+					<label for="inputPassword3" class="col-sm-2 control-label">
+						Password
+					</label>
+					<div class="col-sm-6">
+						<input type="password" class="form-control" id="inputPassword3"  ng-model="newconn.password" />
+					</div>
+				</div>
+                                <div class="form-group">
+					 
+					<label for="HostName" class="col-sm-2 control-label">
+						HostName
+					</label>
+					<div class="col-sm-6">
+						<input type="HostName" class="form-control" id="HostName" ng-model="newconn.host" />
+					</div>
+				</div>
+                                <div class="form-group">
+					 
+					<label for="Port" class="col-sm-2 control-label">
+						Port
+					</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="Port" ng-model="newconn.port" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						 
+						<button id="dbbutton" type="button" class="btn" ng-click="save()">
+							Save
+						</button>
+                                                <!-- Button trigger modal -->
+                                                <button id="dbbutton" type="button" class="btn"  data-toggle="modal" data-target="#DBbrowser" ng-click="connect()" >Save & Connect 
+                                                 </button>
+                                                <button id="dbbutton" type="button" class="btn" ng-click="reset()">
+							Cancel
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+<!-- Modal -->
+<div class="modal fade" id="DBbrowser" tabindex="-1" role="dialog" aria-labelledby="DBbrowserLabel" aria-hidden="true">
+  <div id="ModalBody" class="modal-dialog modal-sm">
+    <div class="modal-content" id="DbModal">
+      <div class="modal-header" id="ModalHead">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="DBbrowserLabel">Database Browser</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+            <h3><span id="ModalLabel" class="label label-primary ">Database:</span></h3>
+            <p>
+
+              <div class="container-fluid">
+
+                <div >
+
+                   
+
+                   
+
+                  <div class="form-group pull-left">
+
+                     
+
+                    <ul class="dblist">
+
+                      <div id="database" ng-repeat="(database, table) in databases">
+
+                        <li><input type="checkbox" ng-model="tables" /> {{database}}</li>
+
+                         
+
+                         
+
+                         
+
+                        <ul class="dblist">
+
+                          <div id="table" ng-show="tables" ng-repeat="(table,column) in table">
+
+                            <li><input type="checkbox" ng-model="columns" /> {{table}}</li>
+
+                             
+
+                             
+
+                             
+
+                            <ul class="dblist">
+
+                              <div id="column" ng-show="tables && columns"  ng-repeat="(column,value) in column">
+
+                                <li> {{column}}</li>
+
+                              </div>
+
+                            </ul>
+                          
+                          </div>
+
+                        </ul>
+
+                         
+
+                      </div> 
+
+                   </ul>
+			<button type="button" class="btn btn-default" ng-click="createQuery()" ng-if="databases">Create Query</button>
+                </div>
+
+              </div>
+
+            </p>
+
+          </div>
+      </div>
+      <div class="modal-footer">
+    
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+</div>
+</div>
+</div>
+</body>

@@ -1,0 +1,154 @@
+<link rel="stylesheet" href="../report_tool_components/css/style.css">
+
+<div class="divL">
+	<div class="vertDiv">
+		<div class="textDiv"><h4>New Query<iron-icon icon='icons:add'></iron-icon><h4></div></div>
+		
+		 <table>
+      			<tr ng-repeat="queryVar in savedQueries" id="tablebody">
+			
+      				<td> <div class="vertQueryDiv"><div class="queryLabel">{{ queryVar.queryName }}</div>
+					<iron-icon id="editIcon" icon='icons:create'></iron-icon>
+					<iron-icon id="deleteIcon" icon='icons:delete'></iron-icon>
+				     </div>
+				</td>
+			
+			</tr>
+			
+    		</table>
+		</div>
+	
+</div>
+	
+<div class="queryDiv">
+<div class="div2">
+	<div class="div1">
+		<button ng-click="toggle()" ng-class="{on:b.state}" ng-repeat="b in buttons">{{b.label}}</button>
+	</div>
+
+ 	<div class="form-group div3">
+    		<input type="email" class="form-control" id="query" value="Query5">
+ 	 </div>
+</div>
+	
+	<div class="row padded formBack" style="display:{{buttons[0].style}};">
+		<div class="builderdiv">
+		<div class="form-group">
+			<div class="formDiv50 divP">
+    				<div class="formDiv25"><label for="connection">Connection</label></div>
+    				<div class="formDiv75"><input class="form-control" id="connection"  placeholder="Connection1"></div>
+			</div>
+			<div class="formDiv50">
+    				<div class="formDiv25"><label for="database" class="divP"><div class="divPLeft">Database</div></label></div>
+    				<div class="formDiv75">                                        
+					  
+						<select ng-model="selectedSchema" ng-change="changeInSchema()" ng-options="value for value in schema"  class="form-control" id="sel3">
+    						</select>
+          				{{selectedSchema}}
+				</div>
+			</div>
+
+			<div class="formDiv50 divP">
+    				<div class="formDiv25"><label for="reportEntity">Report Entity</label></div>
+    				<div class="formDiv75"><select ng-model="selectedDb" ng-change="changeInDb()" ng-options="value for value in optionalDb"  class="form-control" multiple>
+</select></div>
+			</div>
+
+			<div class="formDiv50 divP">
+    				<div class="formDiv25"><label for="attributes" class="divPLeft">Attributes</label></div>
+    				<div class="formDiv75"><select id="attry" ng-model="selectedAttribute" ng-change="changeInAttribute()" ng-options="value.attry for value in optionalAttribute" class="form-control" multiple>
+</select></div>
+			</div>
+
+			<!--div class="divP">
+				<div class="formDiv35">
+					<div class="formDiv25"><label for="Where">Where</label></div>
+					<div class="formDiv75"><select ng-model="selectedWhereAttr" ng-change="changeInWhereAttr()" ng-options="value.attry for value in selectedAttribute" class="form-control">
+</select></div>
+				</div>
+				<div class="formDiv30"><select ng-model="selectedCondition" ng-options="value for value in conditions" class="form-control">
+</select></div>
+				<div class="formDiv35">
+					 <input type="{{typeOffiels}}" ng-model="conditionValue" class="form-control">
+					 <button><iron-icon icon='icons:add'></iron-icon></button>
+				</div>
+			</div-->
+	
+
+	
+		<div class="col-md-12">
+			<div class="col-md-4">
+                            <div class="col-md-4"><div class="divP1"><label for="Where">Where</label></div></div>
+                            <div class="col-md-8"><select ng-model="selectedWhereAttrArray[0]" ng-change="changeInWhereAttr(0)" ng-options="value.attry for value in selectedAttribute" class="form-control"></select></div>
+                        </div>
+                        <div class="col-md-4"><select ng-model="selectedCondition[0]" ng-change="changeInCondition(0)" ng-options="value for value in conditions" class="form-control">
+					</select></div>
+                        <div class="col-md-4">
+                            <div class="col-md-6"><input type="{{typeOffiels[0]}}" ng-change="changeInValue(0)" ng-model="conditionValue[0]" class="form-control"></div>
+                            <div class="col-md-6"><div class="divP1">
+				<a href="#" class="btn btn-info btn-lg" ng-click="addWhereClause()" id="plusbutton">
+          				<span class="glyphicon glyphicon-plus icon-plus" id="add-button"></span> </a>
+				<!--button type="button" class="btn btn-default btn-md"">Default</button-->
+				</div>
+			    </div>
+                       </div>
+		</div>
+		</div> <!--End Of Builder Div  -->
+		<div class="col-md-12"  id="connectorDiv" ng-bind-html="myHTML">
+			<!--div class="col-md-4">
+				<div class="col-md-4"><button id="connectorBtn" ng-click="toggleConnectors()" ng-class="{on:b.state}" ng-repeat="b in connectors">{{b.label}}</button></div>
+				<div class="col-md-8"><select ng-model="selectedWhereAttr" ng-change="changeInWhereAttr()" ng-options="value.attry for value in selectedAttribute" class="form-control"></select></div>
+			</div>
+			<div class="col-md-4"><select ng-model="selectedCondition" ng-options="value for value in conditions" class="form-control">
+					</select></div>
+			<div class="col-md-4">
+                            <div class="col-md-6"><input type="{{typeOffiels}}" ng-model="conditionValue" class="form-control"></div>
+                            <div class="col-md-6"><div class="divP1">
+				<a href="#" class="btn btn-info btn-lg">
+          				<span class="glyphicon glyphicon-plus"></span></a>
+				<a href="#" class="btn btn-info btn-lg closebutton">
+					<span class="glyphicon glyphicon-remove icon-colour"></span></a>
+				</div>
+			    </div>
+                       </div-->
+		</div>
+
+		<hr>
+		<div class="col-md-12">
+			<textarea col=100 id="query-area" class="form-control" ng-model="QueryObject" ng-init="QueryObject" ng-bind="QueryObject" placeholder="Query...">
+</textarea>
+</div>
+			<!--textarea ng-model="textQuery" col=100 class="form-control">select {{attrAsString}} from {{dbAsString}} where {{selectedWhereAttr.attry}} {{selectedCondition}} {{conditionValue}}</textarea
+select {{attrAsString}} from {{dbAsString}} where {{whereAsString}}
+-->
+		
+		</div><hr>
+		<div class="col-md-12">
+			<div class="col-md-6">
+				<div class="divP"><button id="executeButton" type="button" class="btn btn-primary" ng-click="executeQuery()">Execute</button></div>
+			</div>
+			<div class="col-md-6">
+				<div class="divP"><button id="cancelButton" type="button" class="btn btn-primary">Cancel</button></div>
+			</div>
+		</div>
+
+
+
+<!--hr>
+<textarea ng-model="textQuery" col=100>select {{attrAsString}} from {{dbAsString}} where {{selectedWhereAttr.attry}} {{selectedCondition}} {{conditionValue}}</textarea-->
+	</div>
+	
+
+	<div class="row padded formBack" style="display:{{buttons[1].style}};"><!--textarea col=100>select {{attrAsString}} from {{dbAsString}} where {{selectedWhereAttr.attry}} {{selectedCondition}} {{conditionValue}}</textarea-->
+		<div class="builderdiv">
+			<textarea col=100 id="query-area" class="form-control" ng-model="QueryObject" ng-init="QueryObject" ng-bind="QueryObject" placeholder="Query...">
+			</textarea>
+		</div>
+	</div>
+
+</div>
+</div>
+	
+
+
+

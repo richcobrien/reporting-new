@@ -1,0 +1,47 @@
+define(['angular', './sample-module'], function (angular, controllers) {
+  'use strict';
+  controllers.controller('chartgenerationctrl', ['$scope', 'DbService' , '$state',function($scope, DbService,$state) {
+    alert("Entered the Chart Generator");
+    $scope.charttitle = "";
+    $scope.chartdata = "";
+    $scope.chartdrilldata = "";
+     alert("Scope variables Set");
+    var index=0;
+    $("#ok_button").click(function () {
+	
+        var xaxis = $("#sel1").val();
+        var yaxis = $("#sel2").val();
+        DbService.getChartData(xaxis, yaxis)
+        .then(function(chartData){
+		alert("after service call");
+            console.log("after service call");
+            console.log(chartData);
+            $scope.chartdata = JSON.stringify(chartData.mainJSON);
+            $scope.chartdrilldata = JSON.stringify(chartData.drillDownModel);
+       index++;
+        var node = document.createElement("div");
+        node.setAttribute('id','chart-rend-space-'+index);
+        node.setAttribute('class','span6 chart chart_color');
+	$scope.chartType=document.getElementById("sel3").value;
+        document.getElementById("main-chart-div").appendChild(node);
+		
+		 $("#chart-rend-space-" + index).append("<div class='form-group' id='drag'><bar-chart id='Brands' class='span12' type='"+$scope.chartType+"' title='' divid='container" + index + "' subtitle='' data='" + $scope.chartdata + "' drilldowndata='" + $scope.chartdrilldata + "'></bar-chart><div><iron-icon icon='icons:delete' id='remove"+index+"'></iron-icon></div></div>");
+
+      var draggie = new Draggabilly('#chart-rend-space-' + index, {
+       containment: 'body'
+      });
+         $( "#remove"+index ).click(function() {
+	var id = $(this).attr('id');
+  $( "#chart-rend-space-"+id[6] ).slideUp();
+});
+var dialog = document.getElementById("dropdown");
+      if (dialog) {
+        dialog.close();
+      }
+
+        });
+  
+
+  });
+}]);
+});

@@ -1,0 +1,31 @@
+.px-app-nav-0 > nav.px-app-nav {
+    background: #2A3E77 none repeat scroll 0% 0%
+}
+.px-app-nav-0 {
+    background-color: #2A3E77;
+}
+header {
+    background-color: #042776;
+}
+.px-login-0 .login.px-login {
+    background-color: #2A3E77;
+}
+.viewport {
+    background-color: #042776;
+}
+
+.flex.flex--middle {
+    background-color: #042776;
+}
+
+.app.ng-scope {
+    background-color: #042776;
+}
+
+.px-app-nav-0 a.selected.px-app-nav, .px-app-nav-0 a.selected.px-app-nav:hover {
+    background-color: #042776;
+}
+
+main:not([style-scope]):not(.style-scope) {
+    background-color: #424E71;
+}

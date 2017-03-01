@@ -1,0 +1,120 @@
+define(['angular', './sample-module'], function (angular, controllers) {
+    'use strict';
+
+controllers.controller('DBControllerzz',['$scope', 'DbService', function($scope, DbService,$window){
+
+$scope.title="Add New Connection";
+
+
+/**********************************************************************************************************************/
+/* resting connection details */
+    $scope.reset = function() {
+       $scope.title="Add New Connection";
+        $scope.newconn = {};
+    };
+/**********************************************************************************************************************/
+/* connection and saving connection details */
+    $scope.connect = function() {
+    	$scope.newconn.port = parseInt($scope.newconn.port);
+       if($scope.newconn.username==null||$scope.newconn.password==null||$scope.newconn.host==null||$scope.newconn.port==null)
+          {alert("Please fill all the Connection Details!");}
+     else if(angular.isNumber($scope.newconn.port)){ 
+      var conn={
+                "connectionName" : $scope.newconn.connectionName,
+		"username" : $scope.newconn.username,
+                "password" : $scope.newconn.password,
+                "host" : $scope.newconn.host,
+                "port" : $scope.newconn.port };
+                alert("insde save");
+
+      
+// start of old version
+	console.log("in controller connect");
+
+        DbService.makeDbConnection($scope.newconn)
+        .then(function(dbconn){
+            $scope.databases = dbconn.MetaData;
+            console.log('coming here');
+            console.log("dbString from makeDBCon : "+$scope.databases);
+            var dbString = $scope.databases.cheriyan.animals.lifetime;
+            console.log("here");
+            console.log("dbString from makeDBCon : "+dbString);
+        }, function(error){
+
+        });
+	
+// end of old version
+            }
+       else
+         alert("Port No should be digits");
+    };
+/**********************************************************************************************************************/
+/* initails loading of connection details */
+		$scope.initConnection = function(){
+			console.log("Initiated connection");
+			DbService.initiateConnectionDetails()
+			.then(function(dbdetails){
+					console.log("success");
+					$scope.connections = dbdetails.allConnections;
+					console.log("connections = "+$scope.connections)
+				}, function(error){
+					console.log("Failure");	
+					});
+					
+					
+			/*$scope.connections = [{
+                'connectionName' :'Connection1' ,
+		'username' : 'abcd',
+                'password' : 'abcd',
+                'host' : 'abcd',
+                'port' : 2345
+                             },{
+                'connectionName' :'Connection2' ,
+		'username' : 'abcd',
+                'password' : 'abcd',
+                'host' : 'abcd',
+                'port' : 4545
+                             },{
+                'connectionName' :'Connection3' ,
+		'username' : 'abcd',
+                'password' : 'abcd',
+                'host' : 'abcd',
+                'port' : 6785
+                             },{
+                'connectionName' :'Connection4' ,
+		'username' : 'abcd',
+                'password' : 'abcd',
+                'host' : 'abcd',
+                'port' : 7885
+                             }
+		];*/
+		};
+		
+$scope.connectingLine = function(){
+	console.log("connectingLine");
+	DbService.initiateConnectionDetails()
+	.then(function(response){
+		console.log("inside response of connectingLine");
+	},function(error){
+		console.log("inside error of connectingLine");
+	})
+}
+/**********************************************************************************************************************/
+
+    $scope.select_db = function(connectionName) {
+    $scope.title="Edit Connection";
+    var i;
+    for (i in $scope.connections) {
+  /*alert("$scope.connections[i].connectionName");*/
+      if ($scope.connections[i].connectionName == connectionName) {
+        $scope.newconn = angular.copy($scope.connections[i]);
+      }
+   }
+    };
+/**********************************************************************************************************************/
+}// controller ends here
+
+/*edit add new connection details title*/
+]);
+});
+

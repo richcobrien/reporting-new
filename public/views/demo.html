@@ -1,0 +1,22 @@
+<!--script>document.write("<base href=http://localhost:9000/predix/Sukhada/ReportingToolUI/Reporting_Tool_Abhishek_Commit1/public/views>");</script>-->
+<script src='bower_components/angular-upload/angular-upload.min.js'></script>
+<px-card>
+<ul>
+    <li ng-repeat="todo in todos">
+      {{todo.text}} <em>{{todo.done}}</em>
+    </li>
+  </ul><button ng-click="demof()">Click</button>
+
+<div
+  class="btn btn-primary btn-upload"
+  upload-button
+  url="/upload"
+  on-success="onSuccess(response)"
+>Upload</div>
+</px-card>
+<script>
+//var listvalues = { "one": "value1", "two": "value2", "three": "value3" };
+var listvalues =[{'no_of_buildings':10.0,'plot':'plot1','mega_polis_population':3000.0},{'no_of_buildings':8.0,'plot':'plot2','mega_polis_population':2600.0},{'no_of_buildings':9.0,'plot':'plot3','mega_polis_population':2800.0},{'no_of_buildings':12.0,'plot':'plot4','mega_polis_population':3000.0},{'no_of_buildings':16.0,'plot':'plot5','mega_polis_population':4000.0},{'no_of_buildings':8.0,'plot':'plot5','mega_polis_population':2000.0}] 
+alert("...."+listvalues);
+localStorage.setItem('lists', JSON.stringify(listvalues));
+</script>

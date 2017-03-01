@@ -1,0 +1,10 @@
+<px-card>
+<p>Hieeeeeeeeee</p>
+</px-card>
+
+<script>
+var listvalues = localStorage.getItem('lists');
+//pase the value 
+var finalvalue = JSON.parse(listvalues);
+alert(finalvalue.one);
+</script>

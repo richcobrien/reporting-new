@@ -1,0 +1,201 @@
+
+<!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">-->
+
+<link rel="stylesheet" href="../report_tool_components/css/DatabaseBrowseStyle.css" />
+<body ng-cloak>
+
+<div id="parent" class="col-sm-12 " ng-controller="DBController">
+<div class="row" id="main"  >
+
+<div id="frame1" class="col-sm-3 text-center container-fluid" >
+<div>
+<div id="heading1">
+<button id="newConnButton" type="button" class="btn btn-default"  ng-click="reset()">Add New Connection</button>
+</div>
+<div id="body" data-ng-init="initConnection()">
+<span ng-repeat="connection in connections">
+<button id="conn_button" class="button"  ng-click="select_db(connection.connectionName)">
+<span id="gly1" class="glyphicon glyphicon-folder-open"></span><span id="gly_button">{{ connection.connectionName }}</span></button>
+</span>
+</div>
+</div>
+</div>
+<div id="frame2" class="col-sm-9 "container-fluid" " >
+ <div class="container-fluid">
+<div id="heading2">
+<span id="head"> {{ title }} </span>
+</div>
+<div id="connection">
+<div class="col-md-12">
+			<form class="form-horizontal" role="form">
+				
+                                <div class="form-group">
+					 
+					<label for="ConnName" class="col-sm-2 control-label">
+						Connection Name
+					</label>
+					<div class="col-sm-6">
+						<input type="Name" class="form-control" id="ConnName" ng-model="newconn.connectionName" />
+					</div>
+				</div>
+                                <div class="form-group">
+					 
+					<label for="UserName" class="col-sm-2 control-label">
+						Username
+					</label>
+					<div class="col-sm-6">
+						<input type="UserName" class="form-control" id="UserName" ng-model="newconn.username" />
+					</div>
+				</div>
+				<div class="form-group">
+					 
+					<label for="inputPassword3" class="col-sm-2 control-label">
+						Password
+					</label>
+					<div class="col-sm-6">
+						<input type="password" class="form-control" id="inputPassword3"  ng-model="newconn.password" />
+					</div>
+				</div>
+                                <div class="form-group">
+					 
+					<label for="HostName" class="col-sm-2 control-label">
+						HostName
+					</label>
+					<div class="col-sm-6">
+						<input type="HostName" class="form-control" id="HostName" ng-model="newconn.host" />
+					</div>
+				</div>
+                                <div class="form-group">
+					 
+					<label for="Port" class="col-sm-2 control-label">
+						Port
+					</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="Port" ng-model="newconn.port" />
+					</div>
+				</div>
+				<div class="form-group">
+					 
+					<label for="Database" class="col-sm-2 control-label">
+						Database
+					</label>
+					<div class="col-sm-6">
+						<input type="Database" class="form-control" id="Database" ng-model="newconn.database" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						 
+						<button id="saveButton" type="button" class="btn"  data-toggle="modal" data-target="#DBbrowser" ng-click="saveConn()"   data-backdrop="static" data-keyboard="false">
+							Save
+						</button>
+                                                <!-- Button trigger modal -->
+                                                <button id="saveAndConnectButton" type="button" class="btn"  data-toggle="modal" data-target="#DBbrowser" ng-click="connect()"   data-backdrop="static" data-keyboard="false">Save & Connect 
+                                                 </button>
+                                                <button id="cancelButton" type="button" class="btn" ng-click="reset()">
+							Cancel
+						</button><!--button ng-click="navigateToReportWz()">Ok</button-->
+												
+                                                 <!--<button id="nextButton" type="button" class="btn " ng-click="navigateToReportWz()">
+							Next<span class="glyphicon glyphicon-arrow-right"></span> 
+						</button>-->
+      
+					</div>
+				</div>
+			</form>
+		</div>
+
+<!-- Modal -->
+<div class="modal fade" id="DBbrowser" tabindex="-1" role="dialog" aria-labelledby="DBbrowserLabel" aria-hidden="true">
+  <div id="ModalBody" class="modal-dialog modal-sm">
+  <div class="modal-content" id="DbModal" ng-hide="haveDetails">
+      <div class="modal-header" id="ModalHead">
+        <button type="button" style="color:white;" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="DBbrowserLabel">Warning</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+      No data passed...please provide valid data!
+      </div>
+      </div>
+      <div class="modal-footer">
+         
+      </div>
+    </div>
+    <div class="modal-content" id="DbModal" ng-show="haveDetails">
+      <div class="modal-header" id="ModalHead">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="DBbrowserLabel">{{ modaltitle }}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+            <h3><span id="ModalLabel" class="label label-primary ">Database:</span></h3>
+            <p>
+
+              <div class="container-fluid">
+					<img src="../images/Glowingring.gif" alt="loading..." style="max-width: 30%; display: block;" id="connection-loading" >
+                <div>
+                  <div class="form-group pull-left">
+                    <ul class="dblist">
+                      <div id="database" ng-repeat="(database, table) in databases">
+                       <!-- <li><input type="checkbox" ng-model="tables" /> {{database}}</li>-->
+                         
+                               <li> <input type='checkbox' name='thing1' value='valuable1' id="thing1" ng-model="tables" class='pseudo-checkbox sr-only'/> <label class='fancy-checkbox-label' for="thing1"></label> {{database}}</li>
+
+                        <ul class="dblist">
+
+                          <div id="table" ng-show="tables" ng-repeat="(table,column) in table">
+
+                            <!--<li><input type="checkbox" ng-model="columns" /> </li>-->
+                            <li> <input type='checkbox' name='thing2' value='valuable2' id="{{table}}" ng-model="columns" class='pseudo-checkbox sr-only' /> <label for="{{table}}" class='fancy-checkbox-label'></label> {{table}}</li>
+                             
+
+                             
+
+                             
+
+                            <ul class="dblist">
+
+                              <div id="column" ng-show="tables && columns"  ng-repeat="(column,value) in column">
+
+                                <li> {{column}}</li>
+
+                              </div>
+
+                            </ul>
+                          
+                          </div>
+
+                        </ul>
+
+                         
+
+                      </div> 
+
+                   </ul>  
+			<!--button type="button" class="btn btn-default" ng-click="createQuery()" ng-if="databases">Create Query</button-->
+                </div>
+
+              </div>
+
+            </p>
+
+          </div>
+      </div>
+      <div class="modal-footer">
+         <div><button type="button" class="btn" id="nextButton" data-dismiss="modal" ng-click="navigateToReportWz()">Next<span class="glyphicon glyphicon-arrow-right"></span> </button><span id="gly1" class="{{ glyfclass }}">{{msg}}</span></div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+</div>
+</div>
+</div>
+<!--<script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>-->
+</body>

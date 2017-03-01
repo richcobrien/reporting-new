@@ -1,0 +1,13 @@
+---
+applications:
+  - name: tcspredix-reporting
+    buildpack: predix_openresty_buildpack
+    path: dist
+    memory: 64M
+    stack: cflinuxfs2
+    services:
+            - tcspredixapp-redis
+            - tcsreportingtoolview
+    env:
+      UAA_SERVER_URL: https://reportingtotcs.predix-uaa.run.aws-usw02-pr.ice.predix.io
+      REDIS: redis-1

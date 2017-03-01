@@ -1,0 +1,114 @@
+<!--Add this to Blank Card<script src="../bower_components/draggabilly/dist/draggabilly.pkgd.js"></script>-->
+<!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">-->
+
+
+<!-- <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script> -->
+
+
+<link rel="stylesheet" href="../report_tool_components/css/style.css">
+
+<px-card>
+
+  <!--start of JSONdiv -->
+  <div id="JSONdiv" >
+    <section onclick="clickHandler(event)">
+      <paper-toolbar><span class="title">Chart Generator</span>
+        <paper-button type="button" data-dialog="tabledropdown" ng-click="viewTableService()">View Table</paper-button>
+        <paper-button data-dialog="dropdown">Generate Chart</paper-button>
+      </paper-toolbar>
+      <form>
+        <paper-dialog id="dropdown">
+          <h2>Select values</h2>
+
+          <div class="form-group row" data-ng-init="getParameters()">
+<div id="sbox" class="col-md-6">
+  <label for="sel1">X-Value:</label>
+<select class="form-control" id="sel1">
+   <option ng-repeat="(key, value) in parameters">{{key}}</option>
+</select>
+</div>
+<div id="sbox" class="col-md-6">
+  <label for="sel1">Y-Value:</label>
+  <select class="form-control" id="sel2">
+    <option ng-repeat="(key, value) in parameters">{{key}}</option>
+  </select>
+</div>
+
+<div id="sbox" class="col-md-6">
+  <label for="sel1">Drilldown Value:</label>
+  <select class="form-control" id="sel4">
+    <option ng-repeat="(key, value) in parameters">{{key}}</option>
+  </select>
+</div>
+
+</div>
+<!--chart type-->
+<div class="col-md-12">
+<div id="sbox" class="col-md-12">
+              <label for="sel1">Chart-Type:</label>
+              <select class="form-control" id="sel3">
+    <option value="pie">PIE</option>
+    <option value="bar">BAR</option>
+    <option value="line">LINE</option>
+	<option value="column">STACK</option>
+   
+  </select>
+            </div>
+<div id="sbox" class="col-md-12">
+          
+	  <button type="button" id="ok_button" class="btn btn-primary btn-md">Ok</button>
+</div>
+      </div>  </paper-dialog>
+      </form>
+
+
+  <form>
+        <paper-dialog id="tabledropdown" class="tableDropdown">
+<div id="viewtable">
+ <table class="table table-hover table-responsive table-bordered">
+<tr>
+<th ng-repeat="(key, value) in header">{{value}}</th>
+</tr>
+<tr ng-repeat="(key, value) in result">
+<td ng-repeat="(key, values) in value">{{values}}</td>
+</tr>
+</table>
+
+</div>
+           </paper-dialog>
+
+  </form>
+
+</section>
+   
+
+    <div class="row" id="main-chart-div"></div>
+<br><div id="output"></div>
+
+
+   
+    <script type="text/javascript" src="../report_tool_components/js/chartJS.js"></script>
+    <script type="text/javascript" src="../report_tool_components/js/FileSaver.js"></script>
+  </div>
+  <!--end of JSONdiv -->
+<!--<script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>-->
+  </blank-card>
+
+
+  <script>
+    //To save the current page into a string on a button click
+    		$("#saveToJSON").click(function() {
+     		// Current page is saved as a JSON object in string 'op'
+      				var op = JSON.stringify({
+          			data: $('#JSONdiv').html()
+        	})
+		//$('#output').text(op); //....to display json string
+      		//JSON object is parsed back to get a HTML string.
+      		var jsonObj = $.parseJSON(op);
+		//alert(jsonObj.data);
+		});
+  </script>

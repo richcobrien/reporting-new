@@ -1,0 +1,263 @@
+
+body {
+
+  font-family: Roboto, sans-serif;
+
+  color: #333;
+
+  margin: 0;
+
+  -webkit-user-select: none;
+
+  -moz-user-select: none;
+
+  -ms-user-select: none;
+
+  user-select: none;
+
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+  -webkit-touch-callout: none;
+  background-color:inherit;
+
+}
+#parent{
+max-height: inherit;
+min-height: inherit;
+margin: inherit;
+padding: inherit;} 
+
+#main {
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #333;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 35px;
+    padding-bottom: 20px;
+}
+
+
+
+
+a, a:hover {
+
+  text-decoration: none;
+
+}
+
+
+
+
+
+
+
+paper-button {
+
+  margin: 0.5em 1em 0.5em 0;
+
+  width: -moz-max-content;
+
+}
+
+
+
+paper-button[right] {
+
+  position: fixed;
+
+  right: 0;
+  width: -moz-max-content;
+
+}
+
+
+
+/*paper-checkbox {
+
+  margin-left: 1em;
+
+}*/
+
+
+
+paper-fab {
+
+  position: absolute !important;
+
+  top: 35px;
+
+  right: 1em;
+
+  z-index: 1;
+
+}
+
+
+
+paper-tabs {
+
+  background-color: #5677fc;
+
+  color: #fff;
+
+}
+
+
+
+paper-tabs paper-tab.iron-selected {
+
+  color: #ffff8d;
+
+}
+
+#group1: {display:block;
+
+}
+
+#group2: {display:block;
+
+}
+
+#group3: {display:block;
+
+}
+
+.form-horizontal .checkbox {
+
+    padding-top: 30px;
+
+}
+
+#R,#C{
+    padding-top: 10px;
+}
+
+.well{
+padding: 9px;
+}
+
+
+.well-sm {
+
+    padding-top: 30px;
+
+	background-color:rgba(8, 110, 135, 0.76);
+   margin-top: 15px;
+   border-radius: 6px;
+
+}
+.well-sm1 {
+
+    padding-top: 30px;
+
+	background-color: darkgrey;
+
+}
+
+ .paper-button-0[animated] {
+
+    background-color:#333;;
+    width: -moz-max-content;
+    color: white;
+    
+
+
+ }
+.label-primary {
+    background-color: #333;
+    padding: 5px;
+    margin: inherit;
+}
+ul.dblist:not([style-scope]):not(.style-scope), ol:not([style-scope]):not(.style-scope), dd:not([style-scope]):not(.style-scope){
+ margin-left: -2rem;
+}
+
+.fixed-well {
+  min-height: 30em;
+  max-height: 30em;
+  overflow-y: scroll;
+}
+
+route.js
+-----------------------------------------
+/**
+ * Router Config
+ * This is the router definition that defines all application routes.
+ */
+define(['angular', 'angular-ui-router'], function(angular) {
+    'use strict';
+    return angular.module('app.routes', ['ui.router']).config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
+
+        //Turn on or off HTML5 mode which uses the # hash
+        $locationProvider.html5Mode(true).hashPrefix('!');
+
+        /**
+         * Router paths
+         * This is where the name of the route is matched to the controller and view template.
+         */
+        $stateProvider
+            .state('secure', {
+                template: '<ui-view/>',
+                abstract: true,
+                resolve: {
+                    authenticated: ['$q', 'PredixUserService', function ($q, predixUserService) {
+                        var deferred = $q.defer();
+                        predixUserService.isAuthenticated().then(function(userInfo){
+                            deferred.resolve(userInfo);
+                        }, function(){
+                            deferred.reject({code: 'UNAUTHORIZED'});
+                        });
+                        return deferred.promise;
+                    }]
+                }
+            })
+	    .state('Dashboard', {
+                url: '/Dashboard',
+                templateUrl: 'views/Dashboard.html',
+		controller: 'Dashboardcontroller'
+            })
+            /*.state('databaseconfig', {
+                url: '/databaseconfig',
+                templateUrl: 'views/database-config.html',
+                controller: 'DBController'
+            })*/
+             .state('databaseconfig_v2', {
+                url: '/databaseconfig_v2',
+                templateUrl: 'views/database-config_v2.html',
+                controller: 'DBController_v2'
+            })
+             .state('querymodular', {
+                url: '/querymodular',
+                templateUrl: 'views/query-modular.html',
+                //controller:'queryModellerCtrl'
+            })
+            .state('chartgenerator', {
+                url: '/chartgenerator',
+                templateUrl: 'views/chart-generation.html',
+                controller: 'chartgenerationctrl'
+            });
+
+
+        $urlRouterProvider.otherwise(function ($injector) {
+            var $state = $injector.get('$state');
+            document.querySelector('px-app-nav').markSelected('/databaseconfig');
+            $state.go('databaseconfig');
+        });
+
+    }]);
+});
+
+main.js
+-----------------------------------
+
+define(['./sample-module', './sample-directive', './sample-filter',
+'./sample-service', './dashboard-controller',
+'./sample-controller', './predix-asset-service',
+'./predix-user-service', './predix-view-service',
+'./chart-generation-controller','./db-controller', './db-service','./query-modeller-controller','./Dashboard-controller','./db-controller_v2'], function() {
+
+
+});

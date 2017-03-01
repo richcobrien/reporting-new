@@ -1,0 +1,73 @@
+<!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">-->
+
+<!-- <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script> -->
+
+
+<link rel="stylesheet" href="../report_tool_components/css/style_Dash.css">
+<px-card ng-cloak>
+
+
+
+<div class="container-fluid" ng-controller="Dashboardcontroller" data-ng-init="initDashboardReport()">
+
+ <div class="row">
+    <div class="col-sm-6" id="vert_line"><h4>Reports Summary</h4>
+     <div class="col-sm-6">
+        <div class="circle1">{{reportsCount}} </div>
+        <span id="report_circ"class="label">Reports</span>
+     </div>
+     <div class="col-sm-6">
+        <div class="circle2">{{savedQueriesCount}} </div>
+      <span id="report_circ" class="label">Queries</span>
+     </div>
+
+     </div>
+   	<div id="highchart" class="col-sm-6 container">
+        <h4>Last Generated Report</h4>
+		<div id="chart-div"></div>
+
+	<!--bar-chart id="chart" type="pie"  width=350 height=220 title="{{ charttitle }}" divid="container2" subtitle="Click the columns to view versions." data="{{ chartdata }}" drilldowndata="{{ chartdrilldata }}"></bar-chart-->
+    </div>
+</div>
+<hr style="height:1px; border:none; color:#000; background-color:#000;">
+    <div class="col-sm-12 col-sm-height" style="">
+	<h4>All Reports</h4>
+  <div style="height: 500px; overflow: auto;">           
+  <table class="table table-hover table-responsive table-bordered">
+    <thead id="thead">
+      <tr>
+        <th>Sr.No.</th>
+        <th>Report Name</th>
+        <th>DB Connection Name</th>
+	<th>Modified On</th>
+	<th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="report in reportsTable.allReports" ng-click="displayChartFromReport(report.reportName)" id="tablebody">
+      <td> {{ $index + 1 }} </td>
+      <td> {{ report.reportName}} </td>
+      <td> {{ report.connectionName }} </td>
+      <td> {{ report.date }} </td>
+      <td ng-if="report.status==='true'">Report Saved as Draft</td>
+      <td ng-if="report.status==='false'">Report Generated</td>
+    </tbody>
+  </table>
+</div>
+    </div>
+<!--Chart Zoom-In -->
+<!-- The Modal 
+<div id="myModal" class="modal">
+  <span class="close">×</span>
+  <div class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+</div>
+<!--Chart Zoom-In -->
+</div>
+<!--<script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>-->
+</px-card>
