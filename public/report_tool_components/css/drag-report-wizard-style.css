@@ -524,9 +524,8 @@ margin-top: 82px;
 
 #navBARButton {
     padding-left: 10%;
-color: #042776;
- background-color: rgb(247, 248, 252);
-}
+    color: #042776 !important;
+} 
   
 .myTableClass1 {
     width: inherit;
@@ -598,4 +597,161 @@ width: 107px !important;
 	width: 67% !important;
 	margin-left: 29% !important;
 	margin-top: 2% !important;
+}
+
+
+
+
+
+
+/*placeholder inside div*/
+.tablewell:empty::before {
+  color: grey;
+}
+.tablewell[data-placeholder]:not([data-placeholder=""]):empty::before {
+  content: attr(data-placeholder);
+}
+.tablewell:empty::before {
+  content: 'fallback placeholder';
+}
+.tablewell{width: 39rem;
+border-style: dashed !important;
+border-color: grey !important;}
+
+.smalldrop{
+border-style: dashed !important;
+border-color: grey !important;
+height: 2rem !important;
+float: left !important;
+}
+.smallpanel{
+height: 2rem !important;
+float: left !important;
+}
+
+
+
+/*tree view*/
+div.panel:first-child {
+    margin-top:20px;
+}
+
+div.treeview {
+min-width: 100px;
+min-height: 200;
+max-height: 250;
+overflow-x: hidden;
+padding: 0px;
+overflow-y: auto;
+height: 280px;
+	
+	
+}
+div.treeview ul:first-child:before {
+    display: none;
+}
+.treeview, .treeview ul {
+    margin:0;
+    padding:0;
+    list-style:none;
+    
+	color: #369;
+}
+.treeview ul {
+    margin-left:1em;
+    position:relative;
+}
+.treeview ul ul {
+    margin-left:.5em;
+}
+.treeview ul:before {
+    content:"";
+    display:block;
+    width:0;
+    position:absolute;
+    top:0;
+    left:0;
+    border-left:1px solid;
+    
+    /* creates a more theme-ready standard for the bootstrap themes */
+    bottom:15px;
+}
+.treeview li {
+    margin:0;
+    padding:0 1em;
+    line-height:2em;
+    font-weight:700;
+    position:relative;
+}
+.treeview ul li:before {
+    content:"";
+    display:block;
+    width:10px;
+    height:0;
+    border-top:1px solid;
+    margin-top:-1px;
+    position:absolute;
+    top:1em;
+    left:0;
+}
+.tree-indicator {
+    margin-right:5px;
+    
+    cursor:pointer;
+}
+.treeview li a {
+    text-decoration: none;
+    color:inherit;
+    cursor:pointer;
+}
+.treeview li button, .treeview li button:active, .treeview li button:focus {
+    text-decoration: none;
+    color:inherit;
+    border:none;
+    background:transparent;
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 0px 0px;
+    outline: 0;
+}
+
+/*New css*/
+
+.switchbutton{margin-left: 2rem;
+	margin-top: 1rem;}
+#query {
+    width: 39rem !important;
+margin-top: 1rem;
+margin-left: 3rem;
+}
+.div1{padding-top: 1rem;
+padding-left: 2rem !important;}
+.div2{margin-left: 1rem;}
+
+.treeul{margin-left: 0rem !important;}
+.treepanel{min-height: 25em !important;
+	   margin-left: 2rem;
+	   border-color: transparent;}
+.schemaselect{width: 11rem !important;
+margin-left: 1rem !important;}
+
+.div3{margin-top: 1rem;}
+.sqlbuttons{width: 8rem !important;
+background-color: white !important;
+border-color: #C3B6B6 !important;
+color: #666565 !important;}
+.querydiv{width: 40rem !important;}
+.executediv{margin-top: 10px;
+margin-bottom: 20px;}
+.span12{
+    width: 100%;
+}
+#selectDiv{
+    margin-bottom: 15px;
+}
+ 
+#selectDiv .containerVertical{
+    display: block !important;
+    height: 40px;
+    padding: 10px 5px;
+    list-style-type:  none;
 }

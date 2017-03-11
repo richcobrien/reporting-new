@@ -463,3 +463,25 @@ div.scrollBar {
  float: left;
  width: -moz-fit-content;
 }
+.panel.panel-default.cursorDefault.contentName.ng-scope{
+    width: 48% !important;
+}
+.containerVertical div, .gu-mirror{
+	background-color: rgba(204, 204, 204, 0.32) !important;
+}
+
+a:not([style-scope]):not(.style-scope):hover{
+	color: #0200ff !important;
+}
+
+a:not([style-scope]):not(.style-scope):link, a:not([style-scope]):not(.style-scope):visited{
+	color: #0200ff !important;
+}
+
+button.cursorDefault.closeButton{
+	float: right !important; 
+}
+
+.panel-body.ng-binding.ng-scope{
+	color: rgb(43, 75, 162) !important;
+}

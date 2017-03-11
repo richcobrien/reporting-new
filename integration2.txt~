@@ -1,0 +1,213 @@
+/**************         report-wizard.html         *****************************************/
+
+<li><a id="navBARButton" href="#vtabButton">New Chart<span class="glyphicon glyphicon-plus newbuttongly1" ng-click="newChart()"></span></a></li>
+							     <li ng-repeat="value in Reports"  id="deleteChartDiv{{value}}" ng-show="QueryExeVar"><a id="navBARLinks" href="#vtab3" data-toggle="tab"><div id="div123" class="col-md-12"><div class="col-md-10" ng-click="displayChartFromReport(value)">{{value}}</div><div class="glyphicon glyphicon-trash newbuttongly col-md-2" data-toggle="modal" data-target="#deleteChartModal" ng-click="delete_ChartReport_Confirmation(value)"></div></div></a></li>
+
+
+/**************         report-wizard.js        *****************************************/
+
+
+//Save and Execute query Function starts...........
+$scope.saveAndexecuteQuery = function(){
+$scope.queryBuilderValidation="";
+	if($scope.QueryObject.match("where")) {
+	} else {
+		$scope.QueryObject =$scope.QueryObject+" where "+$scope.whereAsString;
+	}
+	if($scope.QueryName=="")
+        {
+		$scope.qNamePlace="Please Enter Query Name";
+		document.getElementById("query").className += " formInvalid";
+	}
+	else if($scope.selectedSchema==undefined || $scope.selectedAttribute=="" || $scope.selectedDb=="")
+        {
+		$scope.queryBuilderValidation="Please be sure you selected all mandatory fields";
+	}
+	else
+	{
+		document.getElementById("connection-loading").style.display = 'block';
+		document.getElementById("loadingDiv").style.display = 'block';
+		DbService.loadingData($scope.QueryObject,$scope.QueryId,$scope.QueryName)
+		.then(function(response){
+		$rootScope.QueryExeVar=true; //<------------------------------------------------------------------
+		document.getElementById("connection-loading").style.display = 'none';
+		document.getElementById("loadingDiv").style.display = 'none';
+                        var responseTableData=response;
+                 	$scope.records=responseTableData;
+               		var i=0;
+			$scope.result=[];
+			$scope.header=[];
+			angular.forEach($scope.records, function(value, key) {
+				angular.forEach(value, function(value1, key) {
+					angular.forEach(value1, function(value2, key) {
+						$scope.result.push(value2);
+						var count = Object.keys(value2).length;
+						while(i<count){
+							angular.forEach(value2, function(value3, key) {
+								$scope.header.push(key);
+								i++;
+							});
+						}
+					});
+	  			});
+			});
+                                
+		},function(error){
+			console.log("error in loading data function: "+error.status);
+		});
+	}
+};
+//Save and Execute query Function ends...........
+
+
+//Execute query Function starts...........
+$scope.executeQuery = function(){
+$scope.queryBuilderValidation="";
+		if($scope.QueryObject.match("where")) {
+		} else {
+			$scope.QueryObject = "select row_number() over() as rownum,"+$scope.attrAsString+" from "+$scope.dbAsString+" where "+$scope.whereAsString;
+		}
+		if($scope.QueryName=="")
+          		{
+			$scope.qNamePlace="Please Enter Query Name";
+			document.getElementById("query").className += " formInvalid";
+			}
+	else if($scope.selectedSchema==undefined || $scope.selectedAttribute=="" || $scope.selectedDb=="")
+        {
+		$scope.queryBuilderValidation="Please be sure you selected all mandatory fields";
+	}
+		else
+		{
+		document.getElementById("connection-loading").style.display = 'block';
+		document.getElementById("loadingDiv").style.display = 'block';
+			DbService.loadingData($scope.QueryObject,$scope.QueryId,$scope.QueryName+"^%q6389476625bn423454n2ghf34gy")
+			.then(function(response){
+				$rootScope.QueryExeVar=true; //<-------------------------------------------------------------
+				document.getElementById("connection-loading").style.display = 'none';
+				document.getElementById("loadingDiv").style.display = 'none';
+                                var responseTableData=response;
+                   		$scope.records=responseTableData;
+               			var i=0;
+				$scope.result=[];
+				$scope.header=[];
+				angular.forEach($scope.records, function(value, key) {
+					angular.forEach(value, function(value1, key) {
+						angular.forEach(value1, function(value2, key) {
+							$scope.result.push(value2);
+							var count = Object.keys(value2).length;
+							while(i<count){
+								angular.forEach(value2, function(value3, key) {
+									$scope.header.push(key);
+									i++;
+								});
+	  						}
+						});
+	  				});
+				});
+                                
+			},function(error){
+				console.log("error in loading data function: "+error.status);
+			});
+		}
+	};
+//Execute query Function ends...........
+
+//New Chart Function starts........
+$scope.newChartVar = false;
+$scope.showChartDetails = false;
+$scope.newChart=function(){
+console.log("newChartVar.."+$scope.newChartVar);
+
+if($rootScope.QueryExeVar == true)
+{
+	$scope.newChartVar = true;
+	$("#main-chart-div").html("");
+}
+else
+	$scope.showChartDetails = false;
+
+
+};
+//New Chart Function ends........
+
+
+
+//displayChartFromReport Function starts........
+$scope.displayChartFromReport = function(reportName){
+$scope.newChartVar = false;
+	DbService.getChartFromReport(reportName)
+	.then(function(chartData){
+		//$scope.hideAndShow(1); //___________________________________
+		$scope.chartdata = JSON.stringify(chartData.mainJSON);
+		$scope.chartdrilldata = JSON.stringify(chartData.drillDownModel);
+		$scope.reportName = JSON.stringify(chartData.reportName);
+		$scope.type = JSON.stringify(chartData.chartType);
+		
+		$("#main-chart-div").html("<bar-chart class='span12' type='"+chartData.chartType+"' divid='container2' width=728 height=400 title='' subtitle='Click the columns to view versions.' data='" + $scope.chartdata + "' drilldowndata='" + $scope.chartdrilldata + "'></bar-chart>");
+		
+	},function(error){
+    		console.log("failure on chart rendering");
+ 	});
+
+};
+//displayChartFromReport Function ends........
+
+
+//generateChart function starts.......
+$scope.chartBuffer= true;
+$scope.generateChart = function(){
+	$scope.chartBuffer= false;
+	var xaxis = $("#sel1").val();
+   var yaxis = $("#sel2").val();
+	var drilldown = $("#sel4").val();
+	var chartType = $("#sel3").val();
+   DbService.getChartData(xaxis, yaxis, drilldown, chartType)
+   .then(function(chartData){
+		$scope.chartBuffer= true;
+		$scope.chart_Data=chartData;
+		$scope.chartdata = JSON.stringify(chartData.mainJSON);
+     		$scope.chartdrilldata = JSON.stringify(chartData.drillDownModel);
+		var reportName = chartData.reportName;
+      index++;
+		$scope.chartType=document.getElementById("sel3").value;
+
+$scope.savingStatus="Saving...";
+$scope.saveFlag=false;
+
+$("#main-chart-div").html("<bar-chart class='span12' type='"+$scope.chartType+"' title='' divid='container' subtitle='' data='" + $scope.chartdata + "' drilldowndata='" + $scope.chartdrilldata + "'></bar-chart><div><span class='glyphicon glyphicon-remove-circle' id='remove'></span><span class='glyphicon glyphicon-floppy-save' id='save' data-toggle='modal' data-target='#saveModal'></span></div>");
+
+			$( "#remove").click(function() {
+				//var id = $(this).attr('id');
+				$( "#main-chart-div").slideUp();
+				});
+			$( "#save").click(function(){
+				
+				if($scope.saveFlag==false)
+				{
+					DbService.getSavedChartReport($scope.chart_Data)
+					.then(function(response){
+						$scope.savingStatus="Saved";
+						$scope.saveFlag=true;
+						
+					}, function(error){
+		      				alert("Saving...Failure"+error.status);
+						$scope.savingStatus="Failed";
+					});
+				}
+				else
+					$scope.savingStatus="Chart is already Saved!";
+   			 })
+
+			var dialog = document.getElementById("dropdown");
+  				 if (dialog) {
+   				dialog.close();
+  			                 }
+
+
+});
+ }; 
+
+
+
+
+/**************         report-wizard.css        *****************************************/

@@ -6,7 +6,7 @@ define(['angular', './sample-module'], function(angular, module) {
      */
     module.factory('DbService', ['$q', '$http',function($q, $http) {
         	var protocol = 'https';
-        	var hostUrl = 'https://reportingtool-v40.run.aws-usw02-pr.ice.predix.io';
+        	var hostUrl = 'https://reportingtool-v50.run.aws-usw02-pr.ice.predix.io';
 		var Connection_Name="";
 		var _connectedLine = function(){
 		return "Gotcha";
@@ -18,7 +18,7 @@ define(['angular', './sample-module'], function(angular, module) {
       		var deferred = $q.defer();
 		var request = {
                 	method: 'POST',
-                	url: 'https://reportingtool-dashboard-v40.run.aws-usw02-pr.ice.predix.io/Dashboard' ,
+                	url: 'https://reportingtool-dashboard-v6.run.aws-usw02-pr.ice.predix.io/Dashboard' ,
 		        //data : connectionDetailsDashboard,
                 	headers: {
                 	    'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ define(['angular', './sample-module'], function(angular, module) {
 		var deferred = $q.defer();
             	var req = {
                 	method: 'GET',
-			url: 'https://reportingtool-dashboard-v40.run.aws-usw02-pr.ice.predix.io/getChartOnDash?reportname='+reportName ,
+			url: 'https://reportingtool-dashboard-v6.run.aws-usw02-pr.ice.predix.io/getChartOnDash?reportname='+reportName ,
                 	headers: {
                     	'Content-Type': 'application/json'
                 	 	 }
@@ -57,7 +57,7 @@ define(['angular', './sample-module'], function(angular, module) {
       var deferred = $q.defer();
 		var request = {
                 	method: 'POST',
-                	url: 'https://reportingtool-metadataloader-v40.run.aws-usw02-pr.ice.predix.io/getAllConnections' ,
+                	url: 'https://reportingtool-metadataloader-v6.run.aws-usw02-pr.ice.predix.io/getAllConnections' ,
 			//data: connectionDetailsDashboard,
                 	headers: {
                 	    'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ define(['angular', './sample-module'], function(angular, module) {
             	var deferred = $q.defer();
 	    	var req = {
                 	method: 'POST',
-                	url: 'https://reportingtool-metadataloader-v40.run.aws-usw02-pr.ice.predix.io/LoadMetaData' ,
+                	url: 'https://reportingtool-metadataloader-v6.run.aws-usw02-pr.ice.predix.io/LoadMetaData' ,
                 	data : requestData,
                 	headers: {
                     		'Content-Type': 'application/json'
@@ -102,7 +102,7 @@ var _saveDBconn = function(requestData){
             	var deferred = $q.defer();
 	    	var req = {
                 	method: 'POST',
-                	url: 'https://reportingtool-metadataloader-v40.run.aws-usw02-pr.ice.predix.io/saveConnectionDetails' ,
+                	url: 'https://reportingtool-metadataloader-v6.run.aws-usw02-pr.ice.predix.io/saveConnectionDetails' ,
                 	data : requestData,
                 	headers: {
                     		'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ var _saveDBconn = function(requestData){
 
 		var req = {
                 	method: 'POST',
-                	url: 'https://reportingtool-dataloader-v40.run.aws-usw02-pr.ice.predix.io/DataLoader',
+                	url: 'https://reportingtool-dataloader-v6.run.aws-usw02-pr.ice.predix.io/DataLoader',
                 	data : request,
                 	headers: {
                     		'Content-Type': 'application/json'
@@ -167,7 +167,7 @@ var _saveDBconn = function(requestData){
    			 "reportName":"postgres_report"};*/
 		var req = {
                 	method: 'POST',
-                	url: 'https://reportingtool-dataloader-v40.run.aws-usw02-pr.ice.predix.io/chartColumnData' ,
+                	url: 'https://reportingtool-dataloader-v6.run.aws-usw02-pr.ice.predix.io/chartColumnData' ,
 			//data : request,
                 	headers: {
                 	    'Content-Type': 'application/json'
@@ -190,7 +190,7 @@ var _saveDBconn = function(requestData){
             	var deferred = $q.defer();
             	var req = {
                 	method: 'GET',
-			url: 'https://reportingtool-dataconverter-v40.run.aws-usw02-pr.ice.predix.io/dataConvetor?xaxis='+xaxis+'&yaxis='+yaxis+'&drilldown='+drilldown+'&charttype='+chartType ,
+			url: 'https://reportingtool-dataconverter-v6.run.aws-usw02-pr.ice.predix.io/dataConvetor?xaxis='+xaxis+'&yaxis='+yaxis+'&drilldown='+drilldown+'&charttype='+chartType ,
                 	headers: {
                     	'Content-Type': 'application/json'
                 	 	 }
@@ -209,7 +209,7 @@ var _saveDBconn = function(requestData){
 		var deferred = $q.defer();
             	var req = {
                 	method: 'POST',
-			url: 'https://reportingtool-dataconverter-v40.run.aws-usw02-pr.ice.predix.io/saveChart' ,
+			url: 'https://reportingtool-dataconverter-v6.run.aws-usw02-pr.ice.predix.io/saveChart' ,
 			data : chartData,
                 	headers: {
                     	'Content-Type': 'application/json'
@@ -228,7 +228,7 @@ var _getQueryDetails = function(){
 	var deferred = $q.defer();
             	var req = {
                 	method: 'POST',
-			url: 'https://reportingtool-dataloader-v40.run.aws-usw02-pr.ice.predix.io/getAllQueries',
+			url: 'https://reportingtool-dataloader-v6.run.aws-usw02-pr.ice.predix.io/getAllQueries',
                 	headers: {
                     	'Content-Type': 'application/json'
                 	 	 }
@@ -247,7 +247,7 @@ var _deleteQuery = function(queryId){
 	var deferred = $q.defer();
             	var req = {
                 	method: 'GET',
-			url: 'https://reportingtool-dataloader-v40.run.aws-usw02-pr.ice.predix.io/deleteQuery?queryid='+queryId ,
+			url: 'https://reportingtool-dataloader-v6.run.aws-usw02-pr.ice.predix.io/deleteQuery?queryid='+queryId ,
                 	headers: {
                     	'Content-Type': 'application/json'
                 	 	 }
@@ -264,7 +264,7 @@ var _deleteChartReport = function(reportName){
 	var deferred = $q.defer();
             	var req = {
                 	method: 'GET',
-			url: 'https://reportingtool-dataloader-v40.run.aws-usw02-pr.ice.predix.io/deleteReport?reportname='+reportName ,
+			url: 'https://reportingtool-dataloader-v6.run.aws-usw02-pr.ice.predix.io/deleteReport?reportname='+reportName ,
                 	headers: {
                     	'Content-Type': 'application/json'
                 	 	 }
@@ -282,7 +282,7 @@ var _deleteChartReport = function(reportName){
 	var _viewTable= function(){
                  var deferred = $q.defer();
                  var req ={method: 'POST',
-			url: 'https://reportingtool-dataloader-v40.run.aws-usw02-pr.ice.predix.io/getQueryOutput' ,
+			url: 'https://reportingtool-dataloader-v6.run.aws-usw02-pr.ice.predix.io/getQueryOutput' ,
                 	headers: {
                     	'Content-Type': 'application/json'
                 	 	 }
@@ -302,7 +302,7 @@ var _deleteChartReport = function(reportName){
                  var deferred = $q.defer();
                  var req ={
                           method: 'POST',
-			url: 'https://reportingtool-dashboard-v40.run.aws-usw02-pr.ice.predix.io/QueryCount ',
+			url: 'https://reportingtool-dashboard-v6.run.aws-usw02-pr.ice.predix.io/QueryCount ',
                 	headers: {
                     	'Content-Type': 'application/json'
                 	 	 }
@@ -321,7 +321,7 @@ var _deleteChartReport = function(reportName){
 		var deferred = $q.defer();
       var req ={
       	method: 'POST',
-			url: 'https://reportingtool-dataloader-v40.run.aws-usw02-pr.ice.predix.io/getSchemaFromRedis',
+			url: 'https://reportingtool-dataloader-v6.run.aws-usw02-pr.ice.predix.io/getSchemaFromRedis',
          headers: {
          	'Content-Type': 'application/json'
             },

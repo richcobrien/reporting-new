@@ -1,10 +1,10 @@
-define(['angular', './sample-module'], function (angular, controllers) {
+define(['angular', './sample-module'], function(angular, controllers) {
     'use strict';
 
     // Controller definition
-    controllers.controller('DashboardsCtrl', ['$scope', '$log', 'PredixAssetService', 'PredixViewService', function ($scope, $log, PredixAssetService, PredixViewService) {
+    controllers.controller('DashboardsCtrl', ['$scope', '$log', 'PredixAssetService', 'PredixViewService', function($scope, $log, PredixAssetService, PredixViewService) {
 
-        PredixAssetService.getAssetsByParentId('root').then(function (initialContext) {
+        PredixAssetService.getAssetsByParentId('root').then(function(initialContext) {
 
             //pre-select the 1st asset
             initialContext.data[0].selectedAsset = true;
@@ -13,7 +13,7 @@ define(['angular', './sample-module'], function (angular, controllers) {
 
             //load view selector
             $scope.openContext($scope.initialContexts.data[0]);
-        }, function (message) {
+        }, function(message) {
             $log.error(message);
         });
 
@@ -21,7 +21,7 @@ define(['angular', './sample-module'], function (angular, controllers) {
         $scope.selectedDeckUrl = null;
 
         // callback for when the Open button is clicked
-        $scope.openContext = function (contextDetails) {
+        $scope.openContext = function(contextDetails) {
 
             // need to clean up the context details so it doesn't have the infinite parent/children cycle,
             // which causes problems later (can't interpolate: {{context}} TypeError: Converting circular structure to JSON)
@@ -56,12 +56,12 @@ define(['angular', './sample-module'], function (angular, controllers) {
 
             //Tag string can be classification from contextDetails
             PredixViewService.getDecksByTags(newContext.classification) // gets all decks for this context
-                .then(function (decks) {
+                .then(function(decks) {
                     $scope.decks = [];
 
                     if (decks && decks.length > 0) {
-                        decks.forEach(function (deck) {
-                            $scope.decks.push({name: deck.title, id: deck.id});
+                        decks.forEach(function(deck) {
+                            $scope.decks.push({ name: deck.title, id: deck.id });
                         });
                     }
                 });
@@ -69,14 +69,14 @@ define(['angular', './sample-module'], function (angular, controllers) {
 
         $scope.viewServiceBaseUrl = PredixViewService.baseUrl;
 
-        $scope.getChildren = function (parent, options) {
+        $scope.getChildren = function(parent, options) {
             return PredixAssetService.getAssetsByParentId(parent.id, options);
         };
 
         $scope.handlers = {
             itemOpenHandler: $scope.openContext,
             getChildren: $scope.getChildren
-            // (optional) click handler: itemClickHandler: $scope.clickHandler
+                // (optional) click handler: itemClickHandler: $scope.clickHandler
         };
     }]);
 });

@@ -10,7 +10,7 @@ define([
     'interceptors',
     'px-datasource',
     'ng-bind-polymer'
-], function ($, angular) {
+], function($, angular) {
     'use strict';
 
     /**
@@ -24,8 +24,8 @@ define([
         'sample.module',
         'predix.datasource',
         'px.ngBindPolymer',
-    		'dragularModule',
-    		'ngDraggable'
+        'dragularModule',
+        'ngDraggable'
     ]);
 
     /**
@@ -33,7 +33,7 @@ define([
      * This controller is the top most level controller that allows for all
      * child controllers to access properties defined on the $rootScope.
      */
-    predixApp.controller('MainCtrl', ['$scope', '$rootScope', 'PredixUserService', function ($scope, $rootScope, predixUserService) {
+    predixApp.controller('MainCtrl', ['$scope', '$rootScope', 'PredixUserService', function($scope, $rootScope, predixUserService) {
 
         //Global application object
         window.App = $rootScope.App = {
@@ -41,17 +41,18 @@ define([
             name: 'Predix Seed',
             session: {},
             tabs: [
-		{icon: 'fa-file-o', state: 'Dashboard', label: 'Dashboard'},
-                {icon: 'fa-file-o', state: 'databaseconfig', label: 'Database Browser'},
-              //{icon: 'fa-cog', state: 'querymodular', label: 'Query Modellar'},
-              //{icon: 'fa-industry', state: 'chartgeneration', label: 'Chart Generation'},
-		{icon: 'fa-line-chart', state: 'reportwizard', label: 'Report Wizard'},
-                {icon: 'fa-industry', state: 'dragger', label: 'dragger'}
-		
+                { icon: 'fa-dashboard', state: 'Dashboard', label: 'Dashboard' },
+                { icon: 'fa-file-o', state: 'databaseconfig', label: 'Database Browser' },
+                //{icon: 'fa-cog', state: 'querymodular', label: 'Query Modellar'},
+                //{icon: 'fa-industry', state: 'chartgeneration', label: 'Chart Generation'},
+                { icon: 'fa-line-chart', state: 'reportwizard', label: 'Report Wizard' },
+                { icon: 'fa-industry', state: 'dragger', label: 'dragger' },
+                { icon: 'fa-line-chart', state: 'draggablerepwiz', label: 'Draggable Rep Wiz' }
+
             ]
         };
 
-        $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+        $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
             if (angular.isObject(error) && angular.isString(error.code)) {
                 switch (error.code) {
                     case 'UNAUTHORIZED':
@@ -61,8 +62,7 @@ define([
                     default:
                         //go to other error state
                 }
-            }
-            else {
+            } else {
                 // unexpected error
             }
         });

@@ -524,9 +524,8 @@ margin-top: 82px;
 
 #navBARButton {
     padding-left: 10%;
-color: #042776;
- background-color: rgb(247, 248, 252);
-}
+    color: #042776 !important;
+} 
   
 .myTableClass1 {
     width: inherit;
