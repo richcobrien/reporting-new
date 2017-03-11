@@ -1,11 +1,11 @@
 define(['angular', './sample-module'], function(angular, controllers) {
-  'use strict';
-   
+    'use strict';
+
     // Controller definition
     controllers.controller('DashboardsCtrl', ['$scope', '$log', 'PredixAssetService', 'PredixViewService', function($scope, $log, PredixAssetService, PredixViewService) {
-   
+
         PredixAssetService.getAssetsByParentId('root').then(function(initialContext) {
-		
+
             //pre-select the 1st asset
             initialContext.data[0].selectedAsset = true;
             $scope.initialContexts = initialContext;
@@ -31,7 +31,7 @@ define(['angular', './sample-module'], function(angular, controllers) {
 
             // url end point can change from context to context
             // so the same card can display different data from different contexts
-		
+
             var url = {
                 'parent': {
                     'datagrid-data': '/sample-data/datagrid-data.json'
@@ -48,27 +48,27 @@ define(['angular', './sample-module'], function(angular, controllers) {
                     'core-vibe-rear-cruise': '/sample-data/core-vibe-rear-cruise1.json',
                     'delta-egt-cruise': '/sample-data/delta-egt-cruise.json'
                 }
- };
+            };
 
             newContext.urls = url[newContext.id];
 
             $scope.context = newContext;
-		
+
             //Tag string can be classification from contextDetails
             PredixViewService.getDecksByTags(newContext.classification) // gets all decks for this context
                 .then(function(decks) {
                     $scope.decks = [];
-		
+
                     if (decks && decks.length > 0) {
                         decks.forEach(function(deck) {
                             $scope.decks.push({ name: deck.title, id: deck.id });
- 	});
+                        });
                     }
                 });
-};
+        };
 
         $scope.viewServiceBaseUrl = PredixViewService.baseUrl;
- 
+
         $scope.getChildren = function(parent, options) {
             return PredixAssetService.getAssetsByParentId(parent.id, options);
         };
@@ -78,5 +78,5 @@ define(['angular', './sample-module'], function(angular, controllers) {
             getChildren: $scope.getChildren
                 // (optional) click handler: itemClickHandler: $scope.clickHandler
         };
-  }]);
+    }]);
 });
