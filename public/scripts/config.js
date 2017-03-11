@@ -4,9 +4,9 @@
 
 'use strict';
 /**
-* This file sets up the basic module libraries you'll need
-* for your application.
-*/
+ * This file sets up the basic module libraries you'll need
+ * for your application.
+ */
 requirejs.onError = function(err) {
     //console.log(err.requireType);
     if (err.requireType === 'timeout') {
@@ -15,9 +15,9 @@ requirejs.onError = function(err) {
     throw err;
 };
 /**
-* RequireJS Config
-* This is configuration for the entire application.
-*/
+ * RequireJS Config
+ * This is configuration for the entire application.
+ */
 require.config({
     enforceDefine: false,
     xhtml: false,
@@ -44,8 +44,8 @@ require.config({
         'angular-mocks': '../bower_components/angular-mocks/angular-mocks',
         'angular-resource': '../bower_components/angular-resource/angular-resource',
         'angular-route': '../bower_components/angular-route/angular-route',
-			'dragularModule': '../bower_components/dragular/dist/dragular',
-			'ngDraggable': '../bower_components/ngDraggable/ngDraggable',
+        'dragularModule': '../bower_components/dragular/dist/dragular',
+        'ngDraggable': '../bower_components/ngDraggable/ngDraggable',
 
         // angular ui router
         'angular-ui-router': '../bower_components/angular-ui-router/release/angular-ui-router.min',
@@ -69,7 +69,7 @@ require.config({
 
         lodash: '../bower_components/lodash/dist/lodash.min',
         jquery: '../bower_components/jquery/dist/jquery.min',
-	resize: '../bower_components/jquery-ui/jquery-ui',
+        resize: '../bower_components/jquery-ui/jquery-ui',
 
     },
     priority: [

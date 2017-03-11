@@ -163,7 +163,8 @@ px-card {
 #queryLabels{background-color: #000;
     color: whitesmoke;}
 .join-msg {
-	color:red;
+	color: rgb(211, 88, 88);
+font-style: italic;
 	}
 .divJoin {
 width: 100%;

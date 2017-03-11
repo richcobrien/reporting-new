@@ -575,4 +575,15 @@ color:blue;moz
 main:not([style-scope]):not(.style-scope) {
     background-color: white;
 } 
-
+.span12{
+    width: 100%;
+}
+#selectDiv{
+    margin-bottom: 15px;
+}
+#selectDiv .containerVertical{
+    display: block !important;
+    height: 40px;
+    padding: 10px 5px;
+    list-style-type:  none;
+}

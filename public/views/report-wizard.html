@@ -8,122 +8,123 @@
 <!-- Latest compiled and minified JavaScript -->
 <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script-->
 
-<px-card ng-cloak >
+<px-card ng-cloak>
 
-<div data-ng-init="initQueryLoading()">
+    <div data-ng-init="initQueryLoading()">
 
-	<div id="title-bar" >
-		<ul class="my-breadcrumb" id="breadcrumb-list" ng-model="selection1" >
-			<li><a href="#" id="my-breadcrumb-anchor" ng-click="selection1='link1'">Query Builder</a></li>
-			<li><a href="#" id="my-breadcrumb-anchor" ng-click="selection1='link2'">Chart Generator</a></li>
-		</ul>
-	</div>
+        <div id="title-bar">
+            <ul class="my-breadcrumb" id="breadcrumb-list" ng-model="selection1">
+                <li><a href="#" id="my-breadcrumb-anchor" ng-click="selection1='link1'">Query Builder</a></li>
+                <li><a href="#" id="my-breadcrumb-anchor" ng-click="selection1='link2'">Chart Generator</a></li>
+            </ul>
+        </div>
 
-	<div  class="animate-switch-container SizeDiv"  ng-switch on="selection1">
-		<div class="animate-switch" ng-switch-when="link1">
-			<!-- page1  -->
-
-
-			
-		<div class="container-fluid mainDIV SizeDivInherit" >
-			<div class="row SizeDivInherit">
-                <div class="col-md-3 navBAR SizeDivInherit">
-						<div class="row SizeDivInherit">
-							<div class="col-md-12 SizeDivInherit">
-							    <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills navBARpill nav-stacked well navBarInside navBARWell SizeDivInherit">                                    <li><a id="navBARButton" href="#vtabButton" data-toggle="tab" ng-click="clearQuery()">New Query<span class="glyphicon glyphicon-plus newbuttongly1"></span></a></li>
+        <div class="animate-switch-container SizeDiv" ng-switch on="selection1">
+            <div class="animate-switch" ng-switch-when="link1">
+                <!-- page1  -->
 
 
-							      <li ng-repeat="value in Queries" ng-model="query_name_on_label" id="deleteQueryDiv{{value.query_id}}" class="navDiv1"><a id="navBARLinks" href="#vtab3" data-toggle="tab"><div id="div124" class="col-md-12"><div class="col-md-10" ng-click="getQueryName(value)">{{value.query_name}}</div><div class="glyphicon glyphicon-trash newbuttongly col-md-2" id="deleteQuery{{value.query_id}}" data-toggle="modal" data-target="#myModal" ng-click="delete_Query_Confirmation(value.query_id)"></div></div></a></li>
 
-								
-							    </ul>
-							</div>
-						</div>
-				</div>
-	
-	
-<div class="col-md-9">
-<div class="row">
+                <div class="container-fluid mainDIV SizeDivInherit">
+                    <div class="row SizeDivInherit">
+                        <div class="col-md-3 navBAR SizeDivInherit">
+                            <div class="row SizeDivInherit">
+                                <div class="col-md-12 SizeDivInherit">
+                                    <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills navBARpill nav-stacked well navBarInside navBARWell SizeDivInherit">
+                                        <li><a id="navBARButton" href="#vtabButton" data-toggle="tab" ng-click="clearQuery()">New Query<span class="glyphicon glyphicon-plus newbuttongly1"></span></a></li>
 
-	<div class="col-md-11 col-xs-12 top">
-		<div class="col-md-3 ">
-			<button ng-click="toggle()" ng-class="{on:b.state}" ng-repeat="b in buttons" >{{b.label}}</button>
-		</div>
 
-		<div class="col-md-9">
-				<input  class="form-control" id="query" data-toggle="tooltip" title="This name already exists!" value="{{queryName}}" ng-model="$parent.QueryName" placeholder="{{qNamePlace}}" ng-change="checkQueryName()"/>
-		 </div>
-	</div>
-	<div class="alert alert-danger "  ng-show="queryNmAlert">
+                                        <li ng-repeat="value in Queries" ng-model="query_name_on_label" id="deleteQueryDiv{{value.query_id}}" class="navDiv1" ng-show="queryBuffer">
+                                            <a id="navBARLinks" href="#vtab3" data-toggle="tab">
+                                                <div id="div124" class="col-md-12">
+                                                    <div class="col-md-10" ng-click="getQueryName(value)">{{value.query_name}}</div>
+                                                    <div class="glyphicon glyphicon-trash newbuttongly col-md-2" id="deleteQuery{{value.query_id}}" data-toggle="modal" data-target="#myModal" ng-click="delete_Query_Confirmation(value.query_id)"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <i class="fa fa-spinner fa-spin imageSpinnerBom" ng-hide="queryBuffer"></i>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-9">
+                            <div class="row">
+
+                                <div class="col-md-11 col-xs-12 top">
+                                    <div class="col-md-3 ">
+                                        <button ng-click="toggle()" ng-class="{on:b.state}" ng-repeat="b in buttons">{{b.label}}</button>
+                                    </div>
+
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="query" data-toggle="tooltip" title="This name already exists!" value="{{queryName}}" ng-model="$parent.QueryName" placeholder="{{qNamePlace}}" ng-change="checkQueryName($parent.QueryName)" />
+                                        <span style="color:red;" ng-show="nameCheck">This name already exists!</span>
+                                    </div>
+                                </div>
+                                <!--div class="alert alert-danger nameAlert1" id="nameAlert">
 		<strong></strong>This name already exists!
-	</div>
-		
-		<div class="col-md-11 col-xs-12" style="display:{{buttons[0].style}};">
-			<div class="builderdiv col-md-12">
-			<div class="form-group midDiv col-md-12">
-				<div class="formDiv50 col-md-5 divP">
-						<div class="formDiv25"><label for="connection">Connection</label></div>
-						<div class="formDiv75"><input class="form-control" id="connection" ng-model="connection_Nm"  placeholder="Connection1"></div>
-				</div>
-				<div class="formDiv50 col-md-5">
-						<div class="formDiv25"><label for="database" class="divP"><div class="divPLeft">Database</div></label></div>
-						<div class="formDiv75">                                        
-						  
-							<select ng-model="$parent.selectedSchema" ng-change="changeInSchema()" ng-options="value for value in schema"  class="form-control" id="dbSelection"></select>
-					</div>
-				</div>
+	</div-->
 
-				<div class="formDiv50 col-md-5 divP">
-						<div class="formDiv25"><label for="reportEntity">Report Entity</label></div>
-						<div class="formDiv75"><select ng-model="$parent.selectedDb" ng-change="changeInDb()" ng-options="value for value in optionalDb"  class="form-control" multiple>
+
+
+                                <div class="col-md-11 col-xs-12" style="display:{{buttons[0].style}};">
+                                    <div class="builderdiv col-md-12">
+                                        <div class="form-group midDiv col-md-12">
+                                            <div class="formDiv50 col-md-5 divP">
+                                                <div class="formDiv25"><label for="connection">Connection</label></div>
+                                                <div class="formDiv75"><input class="form-control" id="connection" ng-model="connection_Nm" placeholder="Connection1"></div>
+                                            </div>
+                                            <div class="formDiv50 col-md-5">
+                                                <div class="formDiv25"><label for="database" class="divP"><div class="divPLeft">Database</div></label></div>
+                                                <div class="formDiv75">
+
+                                                    <select ng-model="$parent.selectedSchema" ng-change="changeInSchema()" ng-options="value for value in schema" class="form-control" id="sel3"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="formDiv50 col-md-5 divP">
+                                                <div class="formDiv25"><label for="reportEntity">Report Entity</label></div>
+                                                <div class="formDiv75"><select ng-model="$parent.selectedDb" ng-change="changeInDb()" ng-options="value for value in optionalDb" class="form-control" multiple>
 	</select></div>
-				</div>
-				<div class="formDiv50 col-md-5 divP">
-						<div class="formDiv25"><label for="attributes" class="divPLeft">Attributes</label></div>
-						<div class="formDiv75"><select id="attry" ng-model="$parent.selectedAttribute" ng-change="changeInAttribute()" ng-options="value.db+'.'+value.attry for value in optionalAttribute" class="form-control" multiple>
+                                            </div>
+
+                                            <div class="formDiv50 col-md-5 divP">
+                                                <div class="formDiv25"><label for="attributes" class="divPLeft">Attributes</label></div>
+                                                <div class="formDiv75"><select id="attry" ng-model="$parent.selectedAttribute" ng-change="changeInAttribute()" ng-options="value.attry for value in optionalAttribute" class="form-control" multiple>
 	</select></div>
-				</div>
+                                            </div>
 
 
-		<div class="col-md-12 endDiv" ng-show="selectedDb.length>1">
-			<input type="checkbox" ng-model="autoJoinCheck" ng-init="autoJoinCheck=false" ng-change="autoJoinCheckFunction()"> Auto join <span class="join-msg"> {{autoJoinMsg}}</span>
-		</div>
-		<div class="col-md-12 endDiv" ng-show="selectedDb.length>1 && autoJoinCheck==false">
-			<div class="col-md-1">
-				<div class="divJoin"><label for="Where">Join</label></div>
-			</div>
-			<div class="col-md-4">
-				<select class="form-control" ng-hide="selectedJoinOpt=='CROSS JOIN'" ng-model="firstJoinAttr" ng-change="changeInJoin()" ng-options="value.db+'.'+value.attry for value in optionalAttribute | filter:{db:selectedDb[0]}"></select>
-			</div>
-			<div class="col-md-3">
-				<select class="form-control" ng-model="selectedJoinOpt" ng-change="changeInJoin()" ng-options="value for value in joinParams"></select>
-			</div>
-			<div class="col-md-4">
-				<select class="form-control" ng-hide="selectedJoinOpt=='CROSS JOIN'" ng-model="secondJoinAttr" ng-change="changeInJoin()" ng-options="value.db+'.'+value.attry for value in optionalAttribute | filter:{db:'!'+selectedDb[0]}"></select>
-			</div>
-			
-		</div>
-		
-			<div class="col-md-12 endDiv">
-				<div class="col-md-4">
-								<div class="col-md-4"><div class="divP1"><label for="Where">Where</label></div></div>
-								<div class="col-md-8"><select ng-model="$parent.selectedWhereAttrArray[0]" ng-change="changeInWhereAttr(0)" ng-options="value.db+'.'+value.attry for value in optionalAttribute" class="form-control"></select></div>
-							</div>
-							<div class="col-md-4"><select ng-model="$parent.selectedCondition[0]" ng-change="changeInCondition(0)" ng-options="value for value in conditions" class="form-control">
+
+
+
+                                            <div class="col-md-12 endDiv">
+                                                <div class="col-md-4">
+                                                    <div class="col-md-4">
+                                                        <div class="divP1"><label for="Where">Where</label></div>
+                                                    </div>
+                                                    <div class="col-md-8"><select ng-model="$parent.selectedWhereAttrArray[0]" ng-change="changeInWhereAttr(0)" ng-options="value.attry for value in selectedAttribute" class="form-control"></select></div>
+                                                </div>
+                                                <div class="col-md-4"><select ng-model="$parent.selectedCondition[0]" ng-change="changeInCondition(0)" ng-options="value for value in conditions" class="form-control">
 						</select></div>
-							<div class="col-md-4">
-								<div class="col-md-6"><input type="{{typeOffiels[0]}}" ng-change="changeInValue(0)" ng-model="$parent.conditionValue[0]" class="form-control"></div>
-								<div class="col-md-6"><div class="divP1">
-					<a href="#" class="btn btn-info btn-lg" ng-click="addWhereClause()" id="plusbutton">
-							<span class="glyphicon glyphicon-plus icon-plus" id="add-button"></span> </a>
-					<!--button type="button" class="btn btn-default btn-md"">Default</button-->
-					</div>
-					</div>
-						   </div>
-			</div>
-			</div> <!--End Of Builder Div  -->
-			<div class="col-md-12 form-group midDiv col-md-12"  id="connectorDiv" ng-bind-html="myHTML">
-				<!--div class="col-md-4">
+                                                <div class="col-md-4">
+                                                    <div class="col-md-6"><input type="{{typeOffiels[0]}}" ng-change="changeInValue(0)" ng-model="$parent.conditionValue[0]" class="form-control"></div>
+                                                    <div class="col-md-6">
+                                                        <div class="divP1">
+                                                            <a href="#" class="btn btn-info btn-lg" ng-click="addWhereClause()" id="plusbutton">
+                                                                <span class="glyphicon glyphicon-plus icon-plus" id="add-button"></span> </a>
+                                                            <!--button type="button" class="btn btn-default btn-md"">Default</button-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End Of Builder Div  -->
+                                        <div class="col-md-12 form-group midDiv col-md-12" id="connectorDiv" ng-bind-html="myHTML">
+                                            <!--div class="col-md-4">
 					<div class="col-md-4"><button id="connectorBtn" ng-click="toggleConnectors()" ng-class="{on:b.state}" ng-repeat="b in connectors">{{b.label}}</button></div>
 					<div class="col-md-8"><select ng-model="selectedWhereAttr" ng-change="changeInWhereAttr()" ng-options="value.attry for value in selectedAttribute" class="form-control"></select></div>
 				</div>
@@ -139,289 +140,316 @@
 					</div>
 					</div>
 						   </div-->
-			</div>
+                                        </div>
 
-			
-			<div class="col-md-12 querDiv">
-				<textarea col=100 id="query-area" class="form-control" ng-model="$parent.QueryObject" ng-init="$parent.QueryObject" placeholder="Query...">{{QueryObject}}
+
+                                        <div class="col-md-12 querDiv">
+                                            <span>{{queryBuilderValidation}}</span>
+                                            <textarea col=100 id="query-area" class="form-control" ng-model="$parent.QueryObject" ng-init="$parent.QueryObject" placeholder="Query...">{{QueryObject}}
 				</textarea>
-	</div>
-				<!--textarea ng-model="textQuery" col=100 class="form-control">select {{attrAsString}} from {{dbAsString}} where {{selectedWhereAttr.attry}} {{selectedCondition}} {{conditionValue}}</textarea
+                                        </div>
+                                        <!--textarea ng-model="textQuery" col=100 class="form-control">select {{attrAsString}} from {{dbAsString}} where {{selectedWhereAttr.attry}} {{selectedCondition}} {{conditionValue}}</textarea
 	select {{attrAsString}} from {{dbAsString}} where {{whereAsString}}
 	-->
-			
-			</div>
-			<div class="col-md-10 EndButtonDiv">
-				<div class="col-md-4">
-					<div class="divP"><button id="executeButton" type="button" class="btn btn-primary" ng-click="executeQuery()">Execute</button>
-					</div>
-				</div>
 
-				
-				<div class="col-md-4">
-					<div class="divP"><button id="saveAndexecuteButton" type="button" class="btn btn-primary" ng-click="saveAndexecuteQuery()">Save And Execute</button></div>
-				</div>
-				<div class="col-md-4">
-					<div class="divP"><button id="cancelButton" type="button" class="btn btn-primary" ng-click="clearQuery()">Cancel</button></div>
-				</div>
-			</div>
-                        
-                       <div id="bottomTableId"><div class="bottomTable"  ng-hide="records==null">
-	<table class="table table-hover table-responsive table-bordered myTable">
-	<tr class="bottomTableRows">
-	<th ng-repeat="(key, value) in header">{{value}}</th>
-	</tr>
-	<tr ng-repeat="(key, value) in result">
-	<td ng-repeat="(key, values) in value">{{values}}</td>
-	</tr>
-	</table>
+                                    </div>
+                                    <div class="col-md-10 EndButtonDiv">
+                                        <div class="col-md-4">
+                                            <div class="divP"><button id="executeButton" type="button" class="btn btn-primary" ng-click="executeQuery()">Execute</button>
+                                            </div>
+                                        </div>
 
-	</div></div>
 
-	
-	<!--hr>
+                                        <div class="col-md-4">
+                                            <div class="divP"><button id="saveAndexecuteButton" type="button" class="btn btn-primary" ng-click="saveAndexecuteQuery()">Save And Execute</button></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="divP"><button id="cancelButton" type="button" class="btn btn-primary" ng-click="clearQuery()">Cancel</button></div>
+                                        </div>
+
+                                    </div>
+
+                                    <div id="bottomTableId">
+                                        <div class="bottomTable" ng-hide="records==null">
+                                            <button type="button" class="btn nextButton1" ng-click="navigateToChart()">
+					Create Report
+				</button>
+                                            <table class="table table-hover table-responsive table-bordered myTable">
+                                                <tr class="bottomTableRows">
+                                                    <th ng-repeat="(key, value) in header">{{value}}</th>
+                                                </tr>
+                                                <tr ng-repeat="(key, value) in result">
+                                                    <td ng-repeat="(key, values) in value">{{values}}</td>
+                                                </tr>
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <!--hr>
 	<textarea ng-model="textQuery" col=100>select {{attrAsString}} from {{dbAsString}} where {{selectedWhereAttr.attry}} {{selectedCondition}} {{conditionValue}}</textarea-->
-		</div>
-		
-                 <div class="col-md-11 col-xs-12 top">
-		<div class="col-md-11 col-xs-12 top ng-binding" style="display:{{buttons[1].style}};"><!--textarea col=100>select {{attrAsString}} from {{dbAsString}} where {{selectedWhereAttr.attry}} {{selectedCondition}} {{conditionValue}}</textarea-->
-			<div class="col-md-12 querDiv">
-				<textarea col=100 id="query-area" class="form-control" ng-model="$parent.QueryObject" ng-init="$parent.QueryObject" placeholder="Query...">{{QueryObject}}
+                                </div>
+
+                                <div class="col-md-11 col-xs-12 top">
+                                    <div class="col-md-11 col-xs-12 top ng-binding" style="display:{{buttons[1].style}};">
+                                        <!--textarea col=100>select {{attrAsString}} from {{dbAsString}} where {{selectedWhereAttr.attry}} {{selectedCondition}} {{conditionValue}}</textarea-->
+                                        <div class="col-md-12 querDiv">
+                                            <textarea col=100 id="query-area" class="form-control" ng-model="$parent.QueryObject" ng-init="$parent.QueryObject" placeholder="Query...">{{QueryObject}}
 				</textarea>
-				<div class="col-md-4">
-					<div class="divP"><button id="executeButton" type="button" class="btn btn-primary" ng-click="executeQuery()">Execute</button>
-</div>
-				</div>
-				
-			</div>
-		</div>
+                                            <div class="col-md-4">
+                                                <div class="divP"><button id="executeButton" type="button" class="btn btn-primary" ng-click="executeQuery()">Execute</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-</div>
-</div>
-</div>
-</div>
 
 
-<!-- Delete Modal Starts Here -->
-<!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header" id="modal_header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Delete Confirmation</h4>
-        </div>
-        <div class="modal-body">
-          <p><label>Deleting the query will delete the corresponding Report.Do you want to Delete?</label></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="cancelDeleteButton" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	  <button type="button" id="deleteButton1{{queryToBeDeleted}}" class="btn-default deleteButton1" data-dismiss="modal" ng-click="delete_query1(queryToBeDeleted)">Delete</button>		
-        </div>
-      </div>
-    </div>
-  </div>
+                <!-- Delete Modal Starts Here -->
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header" id="modal_header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Delete Confirmation</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p><label>Deleting the query will delete the corresponding Report.Do you want to Delete?</label></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="cancelDeleteButton" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="button" id="deleteButton1{{queryToBeDeleted}}" class="btn-default deleteButton1" data-dismiss="modal" ng-click="delete_query1(queryToBeDeleted)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Delete Modal Ends Here-->
-<div id="loadingDiv" class="overthescrn" style=" position: fixed; display: none; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(0, 0, 0, 0.5);">
-		<img src="../images/Glowingring.gif" alt="loading..." style="max-width: 10%; display: none; margin-left: 55%; margin-top: 20%;" id="connection-loading" >
-	</div>
+                <!-- Delete Modal Ends Here-->
+                <div id="loadingDiv" class="overthescrn" style="z-index: 10; position: fixed; display: none; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(0, 0, 0, 0.5);">
+                    <img src="../images/Glowingring.gif" alt="loading..." style="max-width: 10%; display: none; margin-left: 55%; margin-top: 20%;" id="connection-loading">
+                </div>
 
-<div id="loadingDiv" class="overthescrn" style="z-index: 10; position: fixed; display: none; top: 0px; left: 0px; right: 0px; bottom: 0px; background-color: rgba(0, 0, 0, 0.5);">
-		<img src="../images/Glowingring.gif" alt="loading..." style="max-width: 10%; display: none; margin-left: 55%; margin-top: 20%;" id="connection-loading" >
-	</div>
-                 </div>
-	
+            </div>
 
-<div class="animate-switch SizeDivInherit" ng-switch-when="link2">
-			<div class="container-fluid mainDIV SizeDivInherit" >
-				<div class="row SizeDivInherit">
-					<div class="col-md-3 navBAR SizeDivInherit">
-						<div class="row SizeDivInherit">
-							<div class="col-md-12 SizeDivInherit">
-							    <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills navBARpill nav-stacked well navBarInside navBARWell SizeDivInherit">                                    <li><a id="navBARButton" href="#vtabButton" data-toggle="tab">New Chart<span class="glyphicon glyphicon-plus newbuttongly1" ng-click="showChartParameters()" data-toggle="collapse" data-target="#collapse2"></span></a></li>
-							     <li ng-repeat="value in Reports"  id="deleteChartDiv{{value}}"><a id="navBARLinks" href="#vtab3" data-toggle="tab"><div id="div123" class="col-md-12"><div class="col-md-10" ng-click="displayChartFromReport(value)">{{value}}</div><div class="glyphicon glyphicon-trash newbuttongly col-md-2" data-toggle="modal" data-target="#deleteChartModal" ng-click="delete_ChartReport_Confirmation(value)"></div></div></a></li>
-<!--li><a id="navBARLinks" href="#vtab3" data-toggle="tab">CHART 1<span class="glyphicon glyphicon-pencil newbuttongly1"></span><span class="glyphicon glyphicon-trash newbuttongly"></span></a></li>
+
+            <div class="animate-switch SizeDivInherit" ng-switch-when="link2">
+                <div class="container-fluid mainDIV SizeDivInherit">
+                    <div class="row SizeDivInherit">
+                        <div class="col-md-3 navBAR SizeDivInherit">
+                            <div class="row SizeDivInherit">
+                                <div class="col-md-12 SizeDivInherit">
+                                    <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills navBARpill nav-stacked well navBarInside navBARWell SizeDivInherit">
+                                        <li><a id="navBARButton" href="#vtabButton">New Chart<span class="glyphicon glyphicon-plus newbuttongly1" ng-click="newChart()"></span></a></li>
+                                        <li ng-repeat="value in Reports" id="deleteChartDiv{{value}}" ng-show="QueryExeVar">
+                                            <a id="navBARLinks" href="#vtab3" data-toggle="tab">
+                                                <div id="div123" class="col-md-12">
+                                                    <div class="col-md-10" ng-click="displayChartFromReport(value)">{{value}}</div>
+                                                    <div class="glyphicon glyphicon-trash newbuttongly col-md-2" data-toggle="modal" data-target="#deleteChartModal" ng-click="delete_ChartReport_Confirmation(value)"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!--li><a id="navBARLinks" href="#vtab3" data-toggle="tab">CHART 1<span class="glyphicon glyphicon-pencil newbuttongly1"></span><span class="glyphicon glyphicon-trash newbuttongly"></span></a></li>
 <li><a id="navBARLinks" href="#vtab3" data-toggle="tab">CHART 2<span class="glyphicon glyphicon-pencil newbuttongly1"></span><span class="glyphicon glyphicon-trash newbuttongly"></span></a></li>
 <li><a id="navBARLinks" href="#vtab3" data-toggle="tab">CHART 3<span class="glyphicon glyphicon-pencil newbuttongly1"></span><span class="glyphicon glyphicon-trash newbuttongly"></span></a></li-->
-							    </ul>
-							</div>
-						</div>
-					</div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
-                                        <div class="col-md-8 ">
-						<div class="row">
-						   <div class="col-md-12 col-md-offset-3 col-xs-12 accordiondiv">
-						      <div class="panel-group" id="accordion">
+                        <div class="col-md-8 ">
+                            <div class="row">
+                                <div class="col-md-12 col-md-offset-3 col-xs-12 accordiondiv">
+                                    <div class="panel-group" id="accordion">
 
-							<!-- panel1  -->
-							<div class="panel panel-default" id="panel1">
-							  <div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
-							    <h4 class="panel-title accordionTitle "><a class="accordiondivlink" data-toggle="collapse" data-target="#collapse1" href="#collapse1" ng-click="viewTableService()">Records</a></h4>
-							  </div>
+                                        <!-- panel1  -->
+                                        <div class="panel panel-default" id="panel1">
+                                            <div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
+                                                <h4 class="panel-title accordionTitle "><a class="accordiondivlink" data-toggle="collapse" data-target="#collapse1" href="#collapse1" ng-click="viewTableService()">Records</a></h4>
+                                            </div>
 
-							  <div id="collapse1" class="panel-collapse collapse fade">
-							    <div class="panel-body">
-							     <!--table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table-->
-<div class="container bottomTable" id="bottomTableId">
- <table class="table myTable table-hover table-responsive table-bordered">
-<tr>
-<th ng-repeat="(key, value) in header">{{value}}</th>
-</tr>
-<tr ng-repeat="(key, value) in result">
-<td ng-repeat="(key, values) in value">{{values}}</td>
-</tr>
-</table>
+                                            <div id="collapse1" class="panel-collapse collapse fade">
+                                                <div class="panel-body">
 
-</div>
-							    </div>
-							  </div>
-							</div>
+                                                    <div class="container bottomTable" id="bottomTableId" ng-show="QueryExeVar">
+                                                        <table class="table myTable table-hover table-responsive table-bordered" ng-show="tableBuffer">
+                                                            <tr>
+                                                                <th ng-repeat="(key, value) in header">{{value}}</th>
+                                                            </tr>
+                                                            <tr ng-repeat="(key, value) in result">
+                                                                <td ng-repeat="(key, values) in value">{{values}}</td>
+                                                            </tr>
+                                                        </table>
 
-							<!-- panel2 -->
+                                                        <i class="fa fa-spinner fa-spin imageSpinnerBom" ng-hide="tableBuffer"></i>
 
-							<div class="panel panel-default" id="panel2">
-							  <!--div class="panel-heading" data-toggle="collapse" data-target="#collapse2"-->
-							<div class="panel-heading">
-							    <h4 class="panel-title"><a class="accordiondivlink"  href="#collapse2" class="collapsed">Generate Charts</a></h4>
-							  </div>
-							  <div class="panel-collapse collapse fade" id="collapse2">
-							    <div class="panel-body">
+                                                    </div>
 
-							    <form>
-									
-									  
+                                                    <span ng-hide="QueryExeVar" class="queryWarning">Query is not Executed!</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Panel 1 ends -->
 
-									  <!--div class="form-group row" data-ng-init="getParameters()" ng-show='showDivVar==1'-->
-								<div ng-show="showDiv1">
-								 <div class="form-group row" data-ng-init="getParameters()">
-								<div id="sbox" class="col-md-6">
-								  <label for="sel1">X-Value:</label>
-								<select class="form-control" id="sel1">
+                                        <!-- panel2 -->
+
+                                        <div class="panel panel-default" ng-show="newChartVar">
+                                            <!--div class="panel-heading" data-toggle="collapse" data-target="#collapse2"-->
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title"><a class="accordiondivlink">Generate Charts</a></h4>
+                                            </div>
+                                            <div class="panel-body">
+
+                                                <form>
+
+                                                    <div>
+                                                        <div class="form-group row" data-ng-init="getParameters()">
+                                                            <div id="sbox" class="col-md-6">
+                                                                <label for="sel1">X-Value:</label>
+                                                                <select class="form-control" id="sel1">
 								   <option ng-repeat="key in XValues track by $index">{{key}}</option>
 								</select>
-								</div>
-								<div id="sbox" class="col-md-6">
-								  <label for="sel1">Y-Value:</label>
-								  <select class="form-control" id="sel2">
+                                                            </div>
+                                                            <div id="sbox" class="col-md-6">
+                                                                <label for="sel1">Y-Value:</label>
+                                                                <select class="form-control" id="sel2">
 								    <option ng-repeat="key in YValues track by $index">{{key}}</option>
 								  </select>
-								</div>
+                                                            </div>
 
-								<div id="sbox" class="col-md-6">
-								  <label for="sel1">Drilldown Value:</label>
-								  <select class="form-control" id="sel4">
+                                                            <div id="sbox" class="col-md-6">
+                                                                <label for="sel1">Drilldown Value:</label>
+                                                                <select class="form-control" id="sel4">
 								    <option ng-repeat="key in XValues track by $index">{{key}}</option>
 								  </select>
-								</div>
+                                                            </div>
 
-								</div>
-								<!--chart type-->
-								<div class="col-md-12">
-								<div id="sbox" class="col-md-12">
-									      <label for="sel1">Chart-Type:</label>
-									      <select class="form-control" id="sel3">
+                                                        </div>
+                                                        <!--chart type-->
+                                                        <div class="col-md-12">
+                                                            <div id="sbox" class="col-md-12">
+                                                                <label for="sel1">Chart-Type:</label>
+                                                                <select class="form-control" id="sel3">
 								    			<option value="pie">PIE</option>
 								    			<option value="bar">BAR</option>
 								    			<option value="line">LINE</option>
 											<option value="column">STACK</option>
-								   
+
 								 	      </select>
-										
-									    </div>
-								<div id="sbox" class="col-md-12">
-									  
-									  <button type="button" id="ok_button" class="btn btn-primary btn-md" ng-click="generateChart()">Ok</button>
-								</div>
 
-								      </div> </div>
-                                                                   <div class="row" id="main-chart-div" class="col-md-6" ng-show="showDiv2"></div> 
-   								   </form>
-							    </div>
-							  </div>
-							</div>
-						      </div>
-						    </div>
-						</div>
-						<!--<div class="row">
-						
+                                                            </div>
+                                                            <div id="sbox" class="col-md-12">
+
+                                                                <button type="button" id="ok_button" class="btn btn-primary btn-md" ng-click="generateChart()">Ok</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                        <!-- panel 2 ends-->
+                                        <!--span ng-hide="QueryExeVar" class="queryWarning">Query is not Executed!</span-->
+                                        <!--panel 3 starts -->
+
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title accordionTitle "><a class="accordiondivlink">View Charts</a></h4>
+                                            </div>
+
+
+                                            <div class="panel-body">
+                                                <div class="row" id="main-chart-div" class="col-md-6" ng-show="chartBuffer"></div>
+                                                <i class="fa fa-spinner fa-spin imageSpinnerBom" ng-hide="chartBuffer"></i>
+
+                                            </div>
+
+                                        </div>
+
+                                        <!-- panel 3 ends-->
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="row">
+
 						</div>-->
-					
-					</div>
-	 			</div>
 
-			</div>
-			
-<!-- Save Modal Starts Here -->
-<!-- Modal -->
-  <div class="modal fade" id="saveModal" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header" id="modal_header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"></h4>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Save Modal Starts Here -->
+                <!-- Modal -->
+                <div class="modal fade" id="saveModal" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header" id="modal_header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <p><label>{{savingStatus}}</label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Modal Ends Here-->
+
+                <!-- New Chart Modal Starts Here -->
+                <!-- Modal -->
+                <div class="modal fade" id="newChartModal" role="dialog" aria-hidden="true" ng-hide="QueryExeVar">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header" id="modal_header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <span class="queryWarning">Query is not Executed!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Chart Modal Ends Here-->
+
+                <!-- Delete-Chart Modal Starts Here -->
+                <!-- Modal -->
+                <div class="modal fade" id="deleteChartModal" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header" id="modal_header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Delete Confirmation</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p><label>Do you want to Delete the Chart?</label></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="cancelDeleteButton" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="button" id="deleteButton2{{chartToBeDeleted}}" class="btn-default deleteButton2" data-dismiss="modal" ng-click="delete_chart1(chartToBeDeleted)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delete-Chart Modal Ends Here-->
+
+            </div>
         </div>
-        <div class="modal-body">
-          <p><label>{{savingStatus}}</label></p>
-        </div>
-      </div>
+
     </div>
-  </div>
-
-<!-- Save Modal Ends Here-->
-<!-- Delete-Chart Modal Starts Here -->
-<!-- Modal -->
-  <div class="modal fade" id="deleteChartModal" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header" id="modal_header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Delete Confirmation</h4>
-        </div>
-        <div class="modal-body">
-          <p><label>Do you want to Delete the Chart?</label></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="cancelDeleteButton" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	  <button type="button" id="deleteButton2{{chartToBeDeleted}}" class="btn-default deleteButton2" data-dismiss="modal" ng-click="delete_chart1(chartToBeDeleted)">Delete</button>		
-        </div>
-      </div>
-    </div>
-  </div>
-
-<!-- Delete-Chart Modal Ends Here-->			
-			
-		</div>
-	</div>
-	
-</div>
-</px-card >	
-
-
-
-
+</px-card>

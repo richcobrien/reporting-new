@@ -1,54 +1,53 @@
-define(['angular', './sample-module','dragularModule','ngDraggable'], function (angular, controllers) {
-  'use strict';
-  controllers.controller('dragercontroller', ['dragularService', '$scope', 'DbService' , '$state',function(dragularService, $scope, DbService,$state) {
-  	$scope.metaData={"public":{"POST_DB_SQL_QRY2":{"post_db_query_strng":"character varying","post_db_qry_obj_nm":"character varying"},"report_details":{"date":"timestamp without time zone","connection_name":"character varying","report_id":"integer","report_name":"character varying","status":"boolean"},"chart_data":{"chart_type":"character varying","data":"character varying","report_name":"character varying"},"connection_details":{"connection_name":"character varying","password":"character varying","database":"character varying","port":"character varying","host":"character varying","username":"character varying"},"poc_customer_details":{"true_cost":"numeric","customer_region":"character varying","customer_name":"character varying","engine_model":"character varying"},"pg_stat_statements":{"local_blks_read":"bigint","temp_blks_read":"bigint","shared_blks_dirtied":"bigint","query":"text","shared_blks_hit":"bigint","local_blks_written":"bigint","blk_write_time":"double precision","local_blks_dirtied":"bigint","blk_read_time":"double precision","rows":"bigint","userid":"oid","queryid":"bigint","local_blks_hit":"bigint","temp_blks_written":"bigint","calls":"bigint","dbid":"oid","shared_blks_read":"bigint","total_time":"double precision","shared_blks_written":"bigint"},"querytable":{"post_db_query_strng":"text","post_db_qry_obj_nm":"character varying"}}};
-$scope.items1=[];
-angular.forEach($scope.metaData.public, function(value, key){
-	$scope.items1.push({'table':key, 'attributes':value});
-});
-//$scope.tempItem={"post_db_query_strng":"character varying","post_db_qry_obj_nm":"character varying"};
-    $scope.cartModel = [];
-    $scope.tempObject = {"post_db_query_strng":"character varying","post_db_qry_obj_nm":"character varying"};
-    $scope.attrArray = {};
+define(['angular', './sample-module', 'dragularModule', 'ngDraggable'], function(angular, controllers) {
+    'use strict';
+    controllers.controller('dragercontroller', ['dragularService', '$scope', 'DbService', '$state', function(dragularService, $scope, DbService, $state) {
+        $scope.metaData = { "public": { "POST_DB_SQL_QRY2": { "post_db_query_strng": "character varying", "post_db_qry_obj_nm": "character varying" }, "report_details": { "date": "timestamp without time zone", "connection_name": "character varying", "report_id": "integer", "report_name": "character varying", "status": "boolean" }, "chart_data": { "chart_type": "character varying", "data": "character varying", "report_name": "character varying" }, "connection_details": { "connection_name": "character varying", "password": "character varying", "database": "character varying", "port": "character varying", "host": "character varying", "username": "character varying" }, "poc_customer_details": { "true_cost": "numeric", "customer_region": "character varying", "customer_name": "character varying", "engine_model": "character varying" }, "pg_stat_statements": { "local_blks_read": "bigint", "temp_blks_read": "bigint", "shared_blks_dirtied": "bigint", "query": "text", "shared_blks_hit": "bigint", "local_blks_written": "bigint", "blk_write_time": "double precision", "local_blks_dirtied": "bigint", "blk_read_time": "double precision", "rows": "bigint", "userid": "oid", "queryid": "bigint", "local_blks_hit": "bigint", "temp_blks_written": "bigint", "calls": "bigint", "dbid": "oid", "shared_blks_read": "bigint", "total_time": "double precision", "shared_blks_written": "bigint" }, "querytable": { "post_db_query_strng": "text", "post_db_qry_obj_nm": "character varying" } } };
+        $scope.items1 = [];
+        angular.forEach($scope.metaData.public, function(value, key) {
+            $scope.items1.push({ 'table': key, 'attributes': value });
+        });
+        //$scope.tempItem={"post_db_query_strng":"character varying","post_db_qry_obj_nm":"character varying"};
+        $scope.cartModel = [];
+        $scope.tempObject = { "post_db_query_strng": "character varying", "post_db_qry_obj_nm": "character varying" };
+        $scope.attrArray = {};
 
-    var containerLeft = document.querySelector('#containerLeft');
-    var attributeContainer = document.querySelector('#attributeContain');
+        var containerLeft = document.querySelectorAll('.containerLeft');
+        var attributeContainer = document.querySelector('#attributeContain');
 
-    dragularService.cleanEnviroment();
-    dragularService([containerLeft], {
-      containersModel: [$scope.items1],
-      copy: true,
-      dontCopyModel: true,
-      scope: $scope,
-      isContainer: function isContainer (el) {
-        return el.id === 'cart';
-      },
-      isContainerModel: function getModel (){
-        return $scope.cartModel;
-      }
-    });
-    
-    var ele=angular.element(document.getElementById("cart"));
-    $scope.$on('dragulardrop', function() {
-    	console.log("s"+JSON.stringify($scope.cartModel[$scope.cartModel.length-1]));
-    	$scope.tempObj=$scope.cartModel[$scope.cartModel.length-1];
-    	$scope.index=0;
-    	angular.forEach($scope.cartModel,function(value){
-    		if($scope.tempObj==value && $scope.index!=$scope.cartModel.length-1){
-      		$scope.cartModel.splice($scope.cartModel.length-1, 1);
-    			console.log(JSON.stringify($scope.cartModel));
-    		}
-    		else{}
-    		$scope.index++;
-    	});
-    	return function() {
-        console.log('drop', arguments);
-      };
-    });
-    
-    $scope.removeItem = function removeItem() {
-      var index = $scope.cartModel.indexOf(this.item);
-      $scope.cartModel.splice(index, 1);
-    };
-}]);
+        dragularService.cleanEnviroment();
+        dragularService([containerLeft[0], containerLeft[1]], {
+            containersModel: [$scope.items1, $scope.items1],
+            copy: true,
+            dontCopyModel: true,
+            scope: $scope,
+            isContainer: function isContainer(el) {
+                return el.id === 'cart';
+            },
+            isContainerModel: function getModel() {
+                return $scope.cartModel;
+            }
+        });
+
+        var ele = angular.element(document.getElementById("cart"));
+        $scope.$on('dragulardrop', function() {
+            console.log("s" + JSON.stringify($scope.cartModel[$scope.cartModel.length - 1]));
+            $scope.tempObj = $scope.cartModel[$scope.cartModel.length - 1];
+            $scope.index = 0;
+            angular.forEach($scope.cartModel, function(value) {
+                if ($scope.tempObj == value && $scope.index != $scope.cartModel.length - 1) {
+                    $scope.cartModel.splice($scope.cartModel.length - 1, 1);
+                    console.log(JSON.stringify($scope.cartModel));
+                } else {}
+                $scope.index++;
+            });
+            return function() {
+                console.log('drop', arguments);
+            };
+        });
+
+        $scope.removeItem = function removeItem() {
+            var index = $scope.cartModel.indexOf(this.item);
+            $scope.cartModel.splice(index, 1);
+        };
+    }]);
 });

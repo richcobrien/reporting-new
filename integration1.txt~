@@ -1,0 +1,101 @@
+report-wizard.js
+
+$scope.newChartVar = false;
+$scope.newChart=function(){
+console.log("newChartVar.."+$scope.newChartVar);
+$scope.newChartVar = true;
+};
+
+$scope.displayChartFromReport = function(reportName){
+$scope.newChartVar = false; // <-----------------------
+	DbService.getChartFromReport(reportName)
+	.then(function(chartData){
+		//$scope.hideAndShow(1); //___________________________________
+		$scope.chartdata = JSON.stringify(chartData.mainJSON);
+		$scope.chartdrilldata = JSON.stringify(chartData.drillDownModel);
+		$scope.reportName = JSON.stringify(chartData.reportName);
+		$scope.type = JSON.stringify(chartData.chartType);
+		
+		$("#main-chart-div").html("<bar-chart class='span12' type='"+chartData.chartType+"' divid='container2' width=728 height=400 title='' subtitle='Click the columns to view versions.' data='" + $scope.chartdata + "' drilldowndata='" + $scope.chartdrilldata + "'></bar-chart>");
+		
+	},function(error){
+    		console.log("failure on chart rendering");
+ 	});
+
+};
+
+report-wizard.html
+
+<li><a id="navBARButton" href="#vtabButton" data-toggle="tab">New Chart<span class="glyphicon glyphicon-plus newbuttongly1" ng-click="newChart()"></span></a></li>
+							     <li ng-repeat="value in Reports"  id="deleteChartDiv{{value}}"><a id="navBARLinks" href="#vtab3" data-toggle="tab"><div id="div123" class="col-md-12"><div class="col-md-10" ng-click="displayChartFromReport(value)">{{value}}</div><div class="glyphicon glyphicon-trash newbuttongly col-md-2" data-toggle="modal" data-target="#deleteChartModal" ng-click="delete_ChartReport_Confirmation(value)"></div></div></a></li>
+
+
+
+
+
+
+
+
+<!-- panel2 -->
+
+							<div class="panel panel-default" ng-show="newChartVar">
+							  <!--div class="panel-heading" data-toggle="collapse" data-target="#collapse2"-->
+								  <div class="panel-heading">
+								    <h4 class="panel-title"><a class="accordiondivlink">Generate Charts</a></h4>
+								  </div>
+							    <div class="panel-body">
+
+							    <form>
+									
+								<div>
+								 <div class="form-group row" data-ng-init="getParameters()">
+								<div id="sbox" class="col-md-6">
+								  <label for="sel1">X-Value:</label>
+								<select class="form-control" id="sel1">
+								   <option ng-repeat="key in XValues track by $index">{{key}}</option>
+								</select>
+								</div>
+								<div id="sbox" class="col-md-6">
+								  <label for="sel1">Y-Value:</label>
+								  <select class="form-control" id="sel2">
+								    <option ng-repeat="key in YValues track by $index">{{key}}</option>
+								  </select>
+								</div>
+
+								<div id="sbox" class="col-md-6">
+								  <label for="sel1">Drilldown Value:</label>
+								  <select class="form-control" id="sel4">
+								    <option ng-repeat="key in XValues track by $index">{{key}}</option>
+								  </select>
+								</div>
+
+								</div>
+								<!--chart type-->
+								<div class="col-md-12">
+								<div id="sbox" class="col-md-12">
+									      <label for="sel1">Chart-Type:</label>
+									      <select class="form-control" id="sel3">
+								    			<option value="pie">PIE</option>
+								    			<option value="bar">BAR</option>
+								    			<option value="line">LINE</option>
+											<option value="column">STACK</option>
+								   
+								 	      </select>
+										
+									    </div>
+								<div id="sbox" class="col-md-12">
+									  
+									  <button type="button" id="ok_button" class="btn btn-primary btn-md" ng-click="generateChart()">Ok</button>
+								</div>
+
+								      </div> </div>
+                                                                   <!--div class="row" id="main-chart-div" class="col-md-6" ng-show="showDiv2"></div--> 
+   								   </form>
+							    </div>
+							 
+							</div><!-- panel 2 ends-->
+
+
+
+
+

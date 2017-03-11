@@ -4,7 +4,7 @@
  */
 define(['angular', 'angular-ui-router'], function(angular) {
     'use strict';
-    return angular.module('app.routes', ['ui.router']).config(['$stateProvider', '$urlRouterProvider', '$locationProvider' , function($stateProvider, $urlRouterProvider, $locationProvider) {
+    return angular.module('app.routes', ['ui.router']).config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
 
         //Turn on or off HTML5 mode which uses the # hash
         $locationProvider.html5Mode(true).hashPrefix('!');
@@ -22,46 +22,52 @@ define(['angular', 'angular-ui-router'], function(angular) {
                 template: '<ui-view/>',
                 abstract: true,
                 resolve: {
-                    authenticated: ['$q', 'PredixUserService', function ($q, predixUserService) {
+                    authenticated: ['$q', 'PredixUserService', function($q, predixUserService) {
                         var deferred = $q.defer();
-                        predixUserService.isAuthenticated().then(function(userInfo){
+                        predixUserService.isAuthenticated().then(function(userInfo) {
                             deferred.resolve(userInfo);
-                        }, function(){
-                            deferred.reject({code: 'UNAUTHORIZED'});
+                        }, function() {
+                            deferred.reject({ code: 'UNAUTHORIZED' });
                         });
                         return deferred.promise;
                     }]
                 }
             })
-	     .state('Dashboard', {
-		//parent: 'secure',
+            .state('Dashboard', {
+                //parent: 'secure',
                 url: '/Dashboard',
                 templateUrl: 'views/Dashboard.html',
-		controller: 'Dashboardcontroller'
+                controller: 'Dashboardcontroller'
             })
             .state('databaseconfig', {
                 //parent: 'secure',
                 url: '/databaseconfig',
-		//url: '/toState?referer',
+                //url: '/toState?referer',
                 templateUrl: 'views/database-config.html',
                 controller: 'DBController'
             })
-          
-	    .state('reportwizard', {
-		//parent: 'secure',
+
+        .state('reportwizard', {
+                //parent: 'secure',
                 url: '/reportwizard',
                 templateUrl: 'views/report-wizard.html',
-		controller : 'reportwizardcontroller'
+                controller: 'reportwizardcontroller'
             })
             .state('dragger', {
                 url: '/dragger',
                 templateUrl: 'views/dragger-demo.html',
                 controller: 'dragercontroller'
-            });;
- 
+            })
+            .state('draggablerepwiz', {
+                //parent: 'secure',
+                url: '/draggablerepwiz',
+                templateUrl: 'views/draggablerepwiz.html',
+                controller: 'draggablerepwizcontroller'
+            });
 
 
-        $urlRouterProvider.otherwise(function ($injector) {
+
+        $urlRouterProvider.otherwise(function($injector) {
             var $state = $injector.get('$state');
             document.querySelector('px-app-nav').markSelected('/Dashboard');
             $state.go('Dashboard');

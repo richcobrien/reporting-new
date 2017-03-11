@@ -1,10 +1,11 @@
-.vertDiv{
-	width: 100%;
-	float: left;
-	border: 1px solid;
-	background: whitesmoke;
-	margin-left: 0%;
+.vertDiv {
+    width: 100%;
+    float: left;
+    border: 1px solid;
+    background: whitesmoke;
+    margin-left: 0%;
 }
+
 .vertQueryDiv {
     width: 303px;
     height: 32px;
@@ -13,7 +14,8 @@
     background: white none repeat scroll 0% 0%;
     margin-left: 0%;
 }
-.queryLabel{
+
+.queryLabel {
     display: inline-block;
     max-width: 100%;
     margin-bottom: 5px;
@@ -22,18 +24,19 @@
     font-weight: 700;
     color: grey;
 }
-#editIcon
-{
-width: 17px;
-height: 17px;
-margin-left: 180px;
+
+#editIcon {
+    width: 17px;
+    height: 17px;
+    margin-left: 180px;
 }
-#deleteIcon
-{
-width: 17px;
-height: 17px;
-margin-left: 10px;
+
+#deleteIcon {
+    width: 17px;
+    height: 17px;
+    margin-left: 10px;
 }
+
 .iron-icon-0 {
     display: inline-flex;
     align-items: stretch;
@@ -46,56 +49,65 @@ margin-left: 10px;
     height: 22px;
     /*margin-left: 2px;*/
 }
+
 .textDiv {
     color: #5A5757;
     margin-left: 10px;
     height: 26px;
 }
-.queryDiv{
+
+.queryDiv {
     float: left;
     background: white;
-height: calc(100vh - 8rem);
-width: 75%;
-border: 1px solid;
+    height: calc(100vh - 8rem);
+    width: 75%;
+    border: 1px solid;
 }
+
 button.on {
     background-color: #042776;
-    color:white;
-border-radius: 0px;
-border-color: #042776;
-height: 35px;
-width: 80px;
+    color: white;
+    border-radius: 0px;
+    border-color: #042776;
+    height: 35px;
+    width: 80px;
 }
-button{
-  background-color: white;
-border-radius: 0px;
-border-color: white;
-height: 35px;
-width: 80px;
+
+button {
+    background-color: white;
+    border-radius: 0px;
+    border-color: white;
+    height: 35px;
+    width: 60px;
 }
-.divL{
-width: 25%;
-float: left;
-background: white;
-margin-left: 0%;
-border: 1px solid;
-height: calc(100vh - 8rem);
+
+.divL {
+    width: 25%;
+    float: left;
+    background: white;
+    margin-left: 0%;
+    border: 1px solid;
+    height: calc(100vh - 8rem);
 }
-.div1{
-width: 25%;
-float: left;
+
+.div1 {
+    width: 25%;
+    float: left;
 }
-.div2{
-width: 100%;
-float: left;
-border: 1px;
-border-color: #D1E1FF;
-background: #D1E1FF;
+
+.div2 {
+    width: 100%;
+    float: left;
+    border: 1px;
+    border-color: #D1E1FF;
+    background: #D1E1FF;
 }
-.div3{
-width: 75%;
-float: left;
+
+.div3 {
+    width: 75%;
+    float: left;
 }
+
 .form-control {
     display: block;
     width: 96%;
@@ -111,28 +123,34 @@ float: left;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 }
-.formDiv50{
-	width:50%;
-	float: left;
+
+.formDiv50 {
+    width: 50%;
+    float: left;
 }
-.formDiv75{
-	width:75%;
-	float: left;
+
+.formDiv75 {
+    width: 75%;
+    float: left;
 }
-.formDiv25{
-	width:25%;
-	float: left;
-	margin-top: 7px;
+
+.formDiv25 {
+    width: 25%;
+    float: left;
+    margin-top: 7px;
 }
-.formLeftmargin{
-	margin-left: 7px;
+
+.formLeftmargin {
+    margin-left: 7px;
 }
-.divP{
-margin-top: 7px;
+
+.divP {
+    margin-top: 7px;
 }
-.divP1{
-margin-top: 12px;
-margin-left: 41px;
+
+.divP1 {
+    margin-top: 12px;
+    margin-left: 41px;
 }
 
 label {
@@ -142,19 +160,25 @@ label {
     font-weight: 700;
     color: grey;
 }
-.divPLeft{
-margin-left: 10px;
+
+.divPLeft {
+    margin-left: 10px;
 }
 
-.formDiv35{
-	width:35%;
-	float: left;
+.formDiv35 {
+    width: 35%;
+    float: left;
 }
-.formDiv30{
-	width:30%;
-	float: left;
+
+.formDiv30 {
+    width: 30%;
+    float: left;
 }
-input[type="text"],[type="date"],[type="number"], select {
+
+input[type="text"],
+[type="date"],
+[type="number"],
+select {
     width: 60%;
     padding: 0px;
     margin: 8px 0px;
@@ -162,16 +186,66 @@ input[type="text"],[type="date"],[type="number"], select {
     border: 1px solid #CCC;
     outline: medium none;
 }
-.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+
+.col-lg-1,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-md-1,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-sm-1,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-xs-1,
+.col-xs-10,
+.col-xs-11,
+.col-xs-12,
+.col-xs-2,
+.col-xs-3,
+.col-xs-4,
+.col-xs-5,
+.col-xs-6,
+.col-xs-7,
+.col-xs-8,
+.col-xs-9 {
     position: relative;
     min-height: 1px;
     padding-right: 0px;
     padding-left: 13px;
 }
+
 .btn:hover:not([style-scope]):not(.style-scope) {
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.15);
     background-color: #BCB9B9;
 }
+
 .btn:not([style-scope]):not(.style-scope) {
     display: inline-block;
     overflow: visible;
@@ -190,129 +264,137 @@ input[type="text"],[type="date"],[type="number"], select {
     /*background-color: #F3F0E5;*/
     width: 35px;
 }
-.connectorBtn{
-background-color: white;
-border-radius: 0px;
-border-color: white;
-height: 25px;
-width: 40px;
-margin-top: 14px;
 
+.connectorBtn {
+    background-color: white;
+    border-radius: 0px;
+    border-color: white;
+    height: 25px;
+    width: 40px;
+    margin-top: 14px;
 }
+
 .connectorBtn.on {
     background-color: #042776;
-    color:white;
-border-radius: 0px;
-border-color: #042776;
-height: 25px;
-width: 40px;
-margin-top: 14px;
+    color: white;
+    border-radius: 0px;
+    border-color: #042776;
+    height: 25px;
+    width: 40px;
+    margin-top: 14px;
 }
-.col-md-12{
- padding-left: 0px;
+
+.col-md-12 {
+    padding-left: 0px;
 }
-.col-md-4{
- padding-left: 0px;
+
+.col-md-4 {
+    padding-left: 0px;
 }
-.btn + .btn:not([style-scope]):not(.style-scope) {
+
+.btn+.btn:not([style-scope]):not(.style-scope) {
     margin-left: -0.2rem;
     background-color: #DD2F2F;
 }
-#closebutton{
-background-color: #F34444;
+
+#closebutton {
+    background-color: #F34444;
 }
-#plusbutton{
-background-color: #F3F0E5;
+
+#plusbutton {
+    background-color: #F3F0E5;
 }
-.icon-colour{
-color: white;
-margin-top: 4px;
+
+.icon-colour {
+    color: white;
+    margin-top: 4px;
 }
-.icon-plus{
-margin-top: 4px;
+
+.icon-plus {
+    margin-top: 4px;
 }
+
 textarea {
     overflow: auto;
     margin-top: 15px;
 }
-#executeButton{
-	width: 80px;
-	background-color: #042776;
-	height :35px;
-	color: #FFF;
-	border-radius: 4px;
-        border-color: #042776;
-        margin-left: 50%;
 
-        
+#executeButton {
+    width: 80px;
+    background-color: #042776;
+    height: 35px;
+    color: #FFF;
+    border-radius: 4px;
+    border-color: #042776;
+    /*margin-left: 50%;*/
 }
-#cancelDeleteButton{
-	width: 80px;
-	background-color: #042776;
-	height :35px;
-	color: #FFF;
-	border-radius: 4px;
-        border-color: #042776;
-      
 
-        
+#cancelDeleteButton {
+    width: 80px;
+    background-color: #042776;
+    height: 35px;
+    color: #FFF;
+    border-radius: 4px;
+    border-color: #042776;
 }
-.deleteButton1{
-	width: 80px;
-	background-color: #DD2F2F;
-	height :35px;
-	color: #FFF;
-	border-radius: 4px;
-        border-color: #DD2F2F;
-    
+
+.deleteButton1 {
+    width: 80px;
+    background-color: #DD2F2F;
+    height: 35px;
+    color: #FFF;
+    border-radius: 4px;
+    border-color: #DD2F2F;
 }
-.deleteButton2{
-	width: 80px;
-	background-color: #DD2F2F;
-	height :35px;
-	color: #FFF;
-	border-radius: 4px;
-        border-color: #DD2F2F;
-    
+
+.deleteButton2 {
+    width: 80px;
+    background-color: #DD2F2F;
+    height: 35px;
+    color: #FFF;
+    border-radius: 4px;
+    border-color: #DD2F2F;
 }
+
 .btn-default:hover {
     color: #FFF;
     background-color: #dd2f2f;
     border-color: #dd2f2f;
 }
-#modal_header
-{
-	color: #042776;
+
+#modal_header {
+    color: #042776;
 }
+
 .modal-content {
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
     /*width: -moz-max-content;*/
-	
 }
-#saveAndexecuteButton{
-	width: 130px;
-	background-color: #042776;
-	height :35px;
-	color: #FFF;
-	border-radius: 4px;
-        border-color: #042776;
-        margin-left: 50%;
 
-        
+#saveAndexecuteButton {
+    width: 130px;
+    background-color: #042776;
+    height: 35px;
+    color: #FFF;
+    border-radius: 4px;
+    border-color: #042776;
+    /*margin-left: 50%;*/
 }
-#cancelButton{
-	width: 80px;
-	background-color: #042776;
-	height :35px;
-	color: #FFF;
-	border-radius: 4px;
-        border-color: #042776;
-        margin-left: 30%;
 
+#cancelButton {
+    width: 80px;
+    /*background-color: #042776;*/
+    height: 35px;
+    /*color: #FFF;*/
+    border-radius: 4px;
+    /*border-color: #042776;*/
+    /*margin-left: 30%;*/
 }
-.builderdiv{
-margin-top: 3%;
+
+.builderdiv {
+    margin-top: 3%;
 }
+
 .vertQueryDiv {
     width: 303px;
     height: 32px;
@@ -323,34 +405,51 @@ margin-top: 3%;
     margin-left: 0%;
 }
 
-.endDiv{margin-left: 1%;}
+.endDiv {
+    margin-left: 1%;
+}
 
+.top {
+    margin-left: 5%;
+    margin-top: 2%;
+}
 
+.midDiv {
+    margin-left: 3%;
+}
 
+.querDiv {
+    margin-left: 5%;
+}
 
+.EndButtonDiv {
+    margin-left: 3%;
+    margin-bottom: 3%;
+}
 
-.top{margin-left: 5%;
-margin-top: 2%;}
+.AndOrDiv {
+    padding-left: 2%;
+}
 
-.midDiv{margin-left: 3%;}
-
-.querDiv{margin-left: 5%;}
-.EndButtonDiv{margin-left: 3%;
-              margin-bottom: 3%;}
-.AndOrDiv{padding-left: 2%;}
 .chart {
     border-style: hidden;
 }
+
 input.formInvalid::-webkit-input-placeholder {
-   color: red;
-}
-/*
-.bottomTable{background-color: #94baff;
- } 
-*/
-.bottomTableRows:hover{background: dimgrey;
- color:#042776;} 
-input.formInvalid::-webkit-input-placeholder {
-   color: red;
+    color: red;
 }
 
+
+/*
+.bottomTable{background-color: #94baff;
+ }
+*/
+
+.bottomTableRows:hover {
+    background: dimgrey;
+    color: #042776;
+}
+
+input.formInvalid::-webkit-input-placeholder {
+    color: red;
+}

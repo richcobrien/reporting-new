@@ -1,0 +1,33 @@
+<link href='../vendor/examples.css' rel='stylesheet' type='text/css' />
+<link href='../vendor/highlight.github.css' rel='stylesheet' type='text/css' />
+<div class='wrapper'>
+    <div class='tableRow row' id="aaa">
+      <div class='containerLeft containerVertical span2'>
+        <div ng-repeat="item in items1">{{item.table}}</div>
+      </div>
+      <div class='containerLeft containerVertical span2'>
+        <div ng-repeat="item in items1">{{item.table}}</div>
+      </div>
+      <div id="cart" class='containerVertical span10'>
+      <div class="panel-group" id="accordion">
+    	   <div class="panel panel-default cursorDefault contentName" ng-repeat="item in cartModel">
+          <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapse{{$index}}" aria-expanded="false">
+          <div class="panel-heading">
+        {{item.table}}
+        	<button class='cursorDefault closeButton' ng-click="removeItem()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        	</div>
+        	</a>
+        	<div id="collapse{{$index}}" class="panel-collapse collapse" aria-expanded="false">
+        	<div id="attributeContainer">
+        		<div class="panel-body" ng-repeat="(key, value) in item.attributes">{{key}}</div>
+        	</div>
+      	</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+
+</style>

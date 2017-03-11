@@ -1,0 +1,412 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+    <link rel="stylesheet" href="../report_tool_components/css/style.css">
+    <link rel="stylesheet" href="../report_tool_components/css/report-wizard-style.css">
+    <link rel="stylesheet" href="../report_tool_components/css/QueryBuilderStyle.css">
+</head>
+
+<body>
+    <div>
+        <div id="title-bar">
+            <ul class="my-breadcrumb" id="breadcrumb-list">
+                <li><a href="#" id="my-breadcrumb-anchor">Query Builder</a> </li>
+                <li><a href="#" id="my-breadcrumb-anchor">Chart Generator</a> </li>
+            </ul>
+        </div>
+        <div class="animate-switch-container SizeDiv">
+            <div class="animate-switch">
+                <div class="container-fluid mainDIV SizeDivInherit">
+                    <div class="row SizeDivInherit">
+                        <div class="col-md-3 navBAR SizeDivInherit">
+                            <div class="row SizeDivInherit">
+                                <div class="col-md-12 SizeDivInherit">
+                                    <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills navBARpill nav-stacked well navBarInside navBARWell SizeDivInherit">
+                                        <li><a id="navBARButton" href="#vtabButton">New Query<span class="glyphicon glyphicon-plus newbuttongly1"></span></a>
+                                        </li>
+                                        <li id="deleteQueryDiv{{value.query_id}}" class="navDiv1">
+                                            <a id="navBARLinks" href="#vtab3">
+                                                <div id="div124" class="col-md-12">
+                                                    <div class="col-md-10">{{value.query_name}}</div>
+                                                    <div class="glyphicon glyphicon-trash newbuttongly col-md-2" id="deleteQuery{{value.query_id}}">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row" style="margin:0px">
+                                <div class="col-md-12 col-xs-12" style="padding:15px 0; background:#f5f5f5; border-left:1px solid; border-color:#E2DEDF;">
+                                    <div class="col-md-3" style="text-align:center; padding-left:0">
+                                        <button>{{b.label}}</button>
+                                    </div>
+                                    <div class="col-md-9" style="padding-left:0px">
+                                        <input class="form-control" id="query" title="This name already exists!" value="{{queryName}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12" style="border:1px solid; border-color:#E2DEDF;">
+                                    <div class="row" style="margin:0px">
+                                        <div class="col-md-3" style="padding-left:0px">
+                                            <div class="row" style="margin:0; background:#f5f5f5;">
+                                                <div class="col-md-12 col-xs-12">
+                                                    <div class="formDiv80">
+                                                        <select ng-model="$parent.databaseName" ng-change="changeInDb1(key)" ng-options="key for (key,value) in dbObject" class="form-control" id="sel3"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin:0; padding-top:10px">
+                                                <div class="col-md-12 col-xs-12">
+                                                    <div class="css-treeview">
+                                                        <ul style="margin-left:10px" ng-repeat="value in tables">
+                                                            <li class="purchase" style="padding:4px 0"><input type="checkbox" id="item-{{$index}}"><label for="item-0">{{value}}</label>
+                                                                <ul class="containerVertical">
+                                                                    <li ng-repeat="value1 in attrList | filter:{table:value}"><a href="#" style="color:#000000!important">{{value1.attributes}}</a> </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                        <ul style="margin-left:10px">
+                                                            <li class="purchase" style="padding:4px 0">
+                                                                <input type="checkbox" id="item-0">
+                                                                <label for="item-0">Purchase Order</label>
+                                                                <ul class="containerVertical">
+                                                                    <li><a href="#" style="color:#000000!important">Purchase order discription</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Purchase Order Amount</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Purchase Order number</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Purchase Order Currency</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Supplier ID</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Supplier name</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Project number</a> </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="purchase" style="padding:4px 0">
+                                                                <input type="checkbox" id="item-1">
+                                                                <label for="item-1">Invoice</label>
+                                                                <ul class="containerVertical">
+                                                                    <li><a href="#" style="color:#000000!important">Invoice number</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Invoice Description</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Purchase order number</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Supplier ID</a> </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="purchase" style="padding:4px 0">
+                                                                <input type="checkbox" id="item-2">
+                                                                <label for="item-2">Supplier Master</label>
+                                                                <ul class="containerVertical dragLeft">
+                                                                    <li><a href="#" style="color:#000000!important">Supplier ID</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Supplier Name</a> </li>
+                                                                    <li><a href="#" style="color:#000000!important">Supplier DNB</a> </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9" style="padding:10px 20px; background-color:#F0F1F6; border-left:1px solid; border-color:#E2DEEF">
+                                            <span>Select</span>
+                                            <div id="selectDiv" class="row" style="margin:0px; padding:10px 10px; background-color:#fff; border:1px dashed; border-color:#C7C7C7; border-radius:5px;">
+                                                <div class="col-md-11 col-xs-11">
+                                                    <div class="">
+                                                        <ul>
+                                                            <li ng-repeat="value in selectedAttrs">{{value.attributes}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin:0; padding-top: 10px;">
+                                                <div class="col-md-12 col-xs-12"><span>From</span>
+                                                    <div id="selectDrop">
+                                                        <ul>
+                                                            <li ng-repeat="value in selectedAttrs">{{value.attributes}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin:0; padding-top: 10px;">
+                                                <div class="col-md-1 col-xs-1"><span>Join</span></div>
+                                                <div id="joinDrop1" class="col-md-4 col-xs-4" style="padding:5px 10px; background-color:#fff; border:1px dashed; border-color:#C7C7C7; border-radius: 5px; height: 30px;">
+                                                    <ul>
+                                                        <li ng-repeat="value in joinData1">{{value.attributes}}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-2 col-xs-2">
+                                                    <select id="joinSelect" style="width: auto;">
+                                                        <option>Inner join</option>
+                                                        <option>Left join</option>
+                                                        <option>Right join</option>
+                                                        <option>Outer join</option>
+                                                    </select>
+                                                </div>
+                                                <div id="joinDrop2" class="col-md-4 col-xs-4" style="padding:5px 10px; background-color: #fff; border: 1px dashed; border-color: #C7C7C7; border-radius: 5px; height: 30px;">
+                                                    <ul style="padding:0px;">
+                                                        <li ng-repeat="value in joinData2">{{value.attributes}}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-1 col-xs-1">
+                                                    <button id="joinButton"><span class="glyphicon glyphicon-plus icon-plus" id="add-button"></span></button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" style="margin:0; padding-top: 10px;">
+                                                <div class="col-md-1 col-xs-1"><span>Where</span> </div>
+                                                <div id="joinDrop3" class="col-md-4 col-xs-4" style="padding:5px 10px; background-color: #fff; border: 1px dashed; border-color: #C7C7C7; border-radius: 5px; height: 30px;">
+                                                    <ul style="padding:0px;">
+                                                        <li ng-repeat="value in joinData3">{{value.attributes}}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-2 col-xs-2">
+                                                    <select id="joinSelect" style="width: auto;">
+                                                        <option>=</option>
+                                                        <option>&gt;</option>
+                                                        <option>&lt;</option>
+                                                        <option>&gt;=</option>
+                                                        <option>&lt;=</option>
+                                                        <option>!=</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 col-xs-4">
+                                                    <div id="joinDrop"></div>
+                                                </div>
+                                                <div class="col-md-1 col-xs-1">
+                                                    <button id="joinButton"><span class="glyphicon glyphicon-plus icon-plus" id="add-button"></span></button>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin:0; padding-top: 10px;">
+                                                <div class="col-md-1 col-xs-1">
+                                                    <div class="btn-group style-scope local-element-demo">
+                                                        <label for="id1" class="btn style-scope local-element-demo">AND</label>
+                                                        <label for="id2" class="btn style-scope local-element-demo">OR</label>
+                                                    </div>
+                                                </div>
+                                                <div id="joinDrop4" class="col-md-4 col-xs-4" style="padding:5px 10px; background-color: #fff; border: 1px dashed; border-color: #C7C7C7; border-radius: 5px; height: 30px;">
+                                                    <ul style="padding:0px;">
+                                                        <li ng-repeat="value in joinData4">{{value.attributes}}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-2 col-xs-2">
+                                                    <select id="joinSelect" style="width: auto;">
+                                                        <option>=</option>
+                                                        <option>&gt;</option>
+                                                        <option>&lt;</option>
+                                                        <option>&gt;=</option>
+                                                        <option>&lt;=</option>
+                                                        <option>!=</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 col-xs-4">
+                                                    <div id="joinDrop"></div>
+                                                </div>
+                                                <div class="col-md-1 col-xs-1">
+                                                    <button id="joinButton"><span class="glyphicon glyphicon-plus icon-plus" id="add-button"></span></button>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin:0; padding-top: 10px;">
+                                                <div class="col-md-12 col-xs-12">
+                                                    <textarea class="form-control ng-pristine ng-valid ng-binding ng-touched">{{sqlString}}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12" style="background:#f5f5f5; padding:15px 0">
+                                    <div class="col-md-2">
+                                        <div class="divP">
+                                            <button id="cancelButton" type="button" class="btn btn-default">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="divP">
+                                            <button id="executeButton" type="button" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="divP">
+                                            <button id="saveAndexecuteButton" type="button" class="btn btn-primary">Save And Execute</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header" id="modal_header">
+                                <button type="button" class="close">&times;</button>
+                                <h4 class="modal-title">Delete Confirmation</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    <label>Deleting the query will delete the corresponding Report.Do you want to Delete?</label>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="cancelDeleteButton" class="btn btn-default">
+                Cancel</button>
+                                <button type="button" id="deleteButton1{{queryToBeDeleted}}" class="btn-default deleteButton1">
+                Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="loadingDiv" class="overthescrn" style="position:fixed; display:none; top:0px; left:0px; right:0px; bottom:0px">
+                    <img blockedImageSrc="../images/Glowingring.gif" alt="loading..." id="connection-loading" style="max-width:10%; display:none; margin-left:55%; margin-top:20%">
+                </div>
+                <div id="loadingDiv" class="overthescrn" style="z-index:10; position:fixed; display:none; top:0px; left:0px; right:0px; bottom:0px">
+                    <img blockedImageSrc="../images/Glowingring.gif" alt="loading..." id="connection-loading" style="max-width:10%; display:none; margin-left:55%; margin-top:20%">
+                </div>
+            </div>
+            <div class="animate-switch SizeDivInherit">
+                <div class="container-fluid mainDIV SizeDivInherit">
+                    <div class="row SizeDivInherit">
+                        <div class="col-md-3 navBAR SizeDivInherit">
+                            <div class="row SizeDivInherit">
+                                <div class="col-md-12 SizeDivInherit">
+                                    <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills navBARpill nav-stacked well navBarInside navBARWell SizeDivInherit">
+                                        <li><a id="navBARButton" href="#vtabButton">New Chart<span class="glyphicon glyphicon-plus newbuttongly1"></span></a>
+                                        </li>
+                                        <li id="deleteChartDiv{{value}}">
+                                            <a id="navBARLinks" href="#vtab3">
+                                                <div id="div123" class="col-md-12">
+                                                    <div class="col-md-10">{{value}}</div>
+                                                    <div class="glyphicon glyphicon-trash newbuttongly col-md-2"></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 ">
+                            <div class="row">
+                                <div class="col-md-12 col-md-offset-3 col-xs-12 accordiondiv">
+                                    <div class="panel-group" id="accordion">
+                                        <div class="panel panel-default" id="panel1">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title accordionTitle "><a class="accordiondivlink" href="#collapse1">Records</a></h4>
+                                            </div>
+                                            <div id="collapse1" class="panel-collapse collapse fade">
+                                                <div class="panel-body">
+                                                    <div class="container bottomTable" id="bottomTableId">
+                                                        <table class="table myTable table-hover table-responsive table-bordered">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>{{value}}</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>{{values}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default" id="panel2">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title"><a class="accordiondivlink" href="#collapse2" class="collapsed">Generate Charts</a></h4>
+                                            </div>
+                                            <div class="panel-collapse collapse fade" id="collapse2">
+                                                <div class="panel-body">
+                                                    <form>
+                                                        <div>
+                                                            <div class="form-group row">
+                                                                <div id="sbox" class="col-md-6">
+                                                                    <label for="sel1">X-Value:</label>
+                                                                    <select class="form-control" id="sel1">
+                                  <option>{{key}}</option>
+                                </select>
+                                                                </div>
+                                                                <div id="sbox" class="col-md-6">
+                                                                    <label for="sel1">Y-Value:</label>
+                                                                    <select class="form-control" id="sel2">
+                                  <option>{{key}}</option>
+                                </select>
+                                                                </div>
+                                                                <div id="sbox" class="col-md-6">
+                                                                    <label for="sel1">Drilldown Value:</label>
+                                                                    <select class="form-control" id="sel4">
+                                  <option>{{key}}</option>
+                                </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div id="sbox" class="col-md-12">
+                                                                    <label for="sel1">Chart-Type:</label>
+                                                                    <select class="form-control" id="sel3">
+                                  <option value="pie">PIE</option>
+                                  <option value="bar">BAR</option>
+                                  <option value="line">
+                                    LINE</option>
+                                  <option value="column">STACK</option>
+                                </select>
+                                                                </div>
+                                                                <div id="sbox" class="col-md-12">
+                                                                    <button type="button" id="ok_button" class="btn btn-primary btn-md">
+                                  Ok</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" id="main-chart-div" class="col-md-6"></div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="saveModal">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header" id="modal_header">
+                                <button type="button" class="close">&times;
+              </button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    <label>{{savingStatus}}</label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="deleteChartModal">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header" id="modal_header">
+                                <button type="button" class="close">&times;
+              </button>
+                                <h4 class="modal-title">Delete Confirmation</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    <label>Do you want to Delete the Chart?</label>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="cancelDeleteButton" class="btn btn-default">
+                Cancel</button>
+                                <button type="button" id="deleteButton2{{chartToBeDeleted}}" class="btn-default deleteButton2">
+                Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

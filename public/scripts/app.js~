@@ -23,7 +23,9 @@ define([
         'app.interceptors',
         'sample.module',
         'predix.datasource',
-        'px.ngBindPolymer'
+        'px.ngBindPolymer',
+    		'dragularModule',
+    		'ngDraggable'
     ]);
 
     /**

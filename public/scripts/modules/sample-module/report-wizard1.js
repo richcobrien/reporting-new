@@ -1,6 +1,6 @@
 define(['angular', './sample-module'], function (angular, controllers) {
   'use strict';
-  controllers.controller('reportwizardcontroller', ['$scope','$state','DbService','$rootScope','$compile',function($scope,$state,DbService,$rootScope,$compile) {
+  controllers.controller('reportwizardcontroller', ['$scope','$state','DbService','$compile',function($scope,$state,DbService,$compile) {
 
 $scope.selection1 = 'link1';
 //query controller
@@ -23,7 +23,6 @@ $scope.savedQueries=[
 }
 ];
 $scope.buttonname=0;
-$rootScope.QueryExeVar=false;
 	
 $scope.buttons = [{
         label: "Builder",
@@ -62,11 +61,15 @@ $scope.toggleConnectors = function (item) {
     };   
 
 $scope.dbObject=dbString;
-/*{"public":{"POST_DB_SQL_QRY2":{"post_db_query_strng":"character varying","post_db_qry_obj_nm":"character varying"},"report_details":{"date":"timestamp without time zone","connection_name":"character varying","report_id":"integer","report_name":"character varying","status":"boolean"},"chart_data":{"chart_type":"character varying","data":"character varying","report_name":"character varying"},"connection_details":{"connection_name":"character varying","password":"character varying","database":"character varying","port":"character varying","host":"character varying","username":"character varying"},"poc_customer_details":{"true_cost":"numeric","customer_region":"character varying","customer_name":"character varying","engine_model":"character varying"},"pg_stat_statements":{"local_blks_read":"bigint","temp_blks_read":"bigint","shared_blks_dirtied":"bigint","query":"text","shared_blks_hit":"bigint","local_blks_written":"bigint","blk_write_time":"double precision","local_blks_dirtied":"bigint","blk_read_time":"double precision","rows":"bigint","userid":"oid","queryid":"bigint","local_blks_hit":"bigint","temp_blks_written":"bigint","calls":"bigint","dbid":"oid","shared_blks_read":"bigint","total_time":"double precision","shared_blks_written":"bigint"},"querytable":{"post_db_query_strng":"text","post_db_qry_obj_nm":"character varying"}}
-    ,
-    "publi":{"report_details":{"date":"timestamp without time zone","connection_name":"character varying","report_id":"integer","report_name":"character varying","status":"boolean"},"chart_data":{"chart_type":"character varying","data":"character varying","report_name":"character varying"},"connection_details":{"connection_name":"character varying","password":"character varying","database":"character varying","port":"character varying","host":"character varying","username":"character varying"},"poc_customer_details":{"true_cost":"numeric","customer_region":"character varying","customer_name":"character varying","engine_model":"character varying"},"pg_stat_statements":{"local_blks_read":"bigint","temp_blks_read":"bigint","shared_blks_dirtied":"bigint","query":"text","shared_blks_hit":"bigint","local_blks_written":"bigint","blk_write_time":"double precision","local_blks_dirtied":"bigint","blk_read_time":"double precision","rows":"bigint","userid":"oid","queryid":"bigint","local_blks_hit":"bigint","temp_blks_written":"bigint","calls":"bigint","dbid":"oid","shared_blks_read":"bigint","total_time":"double precision","shared_blks_written":"bcharacter varyingigint"},"querytable":{"post_db_query_strng":"text","post_db_qry_obj_nm":"character varying"}}
-    };*/
+DbService.getMetaDataForQueryDesign().then(function(response){
+	alert(response);
+},function(error){
+	console.log("error in loading data function: "+error.status);
+});
+$scope.dbObject={"public":{"flat":{"no_of_members":"numeric","flat_name":"character varying"},"buildings":{"building_name":"character varying","building_population":"numeric","no_of_flats":"numeric"},"pg_stat_statements":{"local_blks_read":"bigint","temp_blks_read":"bigint","shared_blks_dirtied":"bigint","query":"text","shared_blks_hit":"bigint","local_blks_written":"bigint","blk_write_time":"double precision","local_blks_dirtied":"bigint","blk_read_time":"double precision","rows":"bigint","userid":"oid","queryid":"bigint","local_blks_hit":"bigint","temp_blks_written":"bigint","calls":"bigint","dbid":"oid","shared_blks_read":"bigint","total_time":"double precision","shared_blks_written":"bigint"},"room_availability":{"plot":"character varying","avail_rooms":"numeric"},"mega_polis":{"plot":"character varying","no_of_buildings":"numeric","mega_polis_population":"numeric"}}};
 		$scope.conditions=["=",">","<",">=","<=","!=","LIKES"];
+		$scope.joinParams = ["CROSS JOIN","INNER JOIN","LEFT OUTER JOIN","RIGHT OUTER JOIN","FULL OUTER JOIN"];
+		$scope.selectedJoinOpt="INNER JOIN";
     $scope.schema=[];
     $scope.database={};
     $scope.column={};
@@ -115,13 +118,14 @@ $scope.showDiv2="";
      });
 
 $scope.changeInSchema = function(){
+		$scope.queryBuilderValidation="";
     		$scope.optionalDb=$scope.database[$scope.selectedSchema];
 		//alert("selected schema..."+$scope.selectedSchema);
     };
     $scope.changeInDb = function(){
-$scope.queryBuilderValidation="";
     		$scope.optionalAttribute=[];
         $scope.dbAsString="";
+        console.dir($scope.selectedDb);
     		angular.forEach($scope.selectedDb, function(values){
             angular.forEach($scope.column[values], function(value){
             		$scope.tempObject={};
@@ -139,11 +143,17 @@ $scope.queryBuilderValidation="";
             }
         });
         $scope.QueryObject = "select row_number() over() as rownum,"+$scope.attrAsString+" from "+$scope.dbAsString;
+    	var vm = this;
+    	if(vm.autoJoinCheck==true){
+    		vm.autoJoinCheck=false;
+    		$scope.autoJoinCheckFunction();
+    	}
     };
     $scope.changeInAttribute = function(){
-$scope.queryBuilderValidation="";
+		$scope.queryBuilderValidation="";
     		$scope.attrAsString="";
 		$scope.selectedWhereAttrArray[0]='';
+		console.log($scope.selectedAttribute);
     		angular.forEach($scope.selectedAttribute, function(value){
                     switch($scope.attrAsString){
             		case "":
@@ -157,8 +167,53 @@ $scope.queryBuilderValidation="";
                 });
         $scope.QueryObject = "select row_number() over() as rownum,"+$scope.attrAsString+" from "+$scope.dbAsString;
     };
+    $scope.joinStatement="";
+    $scope.firstJoinAttr={};
+    $scope.secondJoinAttr={};
+    $scope.changeInJoin = function(){
+    	var vm = this;
+    	if(vm.selectedJoinOpt=="CROSS JOIN"){
+    		$scope.joinStatement = $scope.selectedDb[0]+" "+vm.selectedJoinOpt+" "+$scope.selectedDb[1];
+    		$scope.QueryObject = "select row_number() over() as rownum,"+$scope.attrAsString+" from "+$scope.joinStatement;
+    		$scope.dbAsString = $scope.joinStatement;
+    	}
+    	else{
+    		$scope.joinStatement = vm.firstJoinAttr.db+" "+vm.selectedJoinOpt+" "+vm.secondJoinAttr.db+" ON "+vm.firstJoinAttr.db+"."+vm.firstJoinAttr.attry+"="+vm.secondJoinAttr.db+"."+vm.secondJoinAttr.attry;
+    		$scope.QueryObject = "select row_number() over() as rownum,"+$scope.attrAsString+" from "+$scope.joinStatement;
+    		$scope.dbAsString = $scope.joinStatement;
+    	}
+    };
+    $scope.autoJoinCheckFunction = function(){
+    	var vm = this;
+    	$scope.autoJoinMsg="";
+    	if(vm.autoJoinCheck==true){
+    		$scope.commonCol="";
+    		angular.forEach($scope.optionalAttribute, function(value){
+    			angular.forEach($scope.optionalAttribute, function(value1){
+    				if(value.db!=value1.db && value.attry==value1.attry){
+    					if($scope.commonCol==value1.attry){
+    						}
+    					$scope.commonCol=value1.attry;
+    				}
+    			});
+    		});
+    		if($scope.commonCol!=""){
+    			$scope.joinStatement = $scope.selectedDb[0]+" INNER JOIN "+$scope.selectedDb[1]+" ON "+$scope.selectedDb[0]+"."+$scope.commonCol+"="+$scope.selectedDb[1]+"."+$scope.commonCol;
+    			$scope.QueryObject = "select row_number() over() as rownum,"+$scope.attrAsString+" from "+$scope.joinStatement;
+    			$scope.dbAsString = $scope.joinStatement;
+    			$scope.autoJoinMsg="";
+    		}
+    		else{
+    			$scope.QueryObject = "select row_number() over() as rownum";
+    				$scope.autoJoinMsg="No matching columns";
+    		}
+    	}
+    	else{
+    		$scope.QueryObject = "select row_number() over() as rownum";
+    	}
+    };
     $scope.changeInWhereAttr = function(item){
-$scope.queryBuilderValidation="";
+	$scope.queryBuilderValidation="";
 	$scope.whereArray[(item*4)]=$scope.selectedWhereAttrArray[item].attry;
 	$scope.makeString();
     	switch ($scope.datatype[$scope.selectedWhereAttrArray[item].attry]) {
@@ -184,7 +239,7 @@ $scope.queryBuilderValidation="";
     };
 
 $scope.changeInCondition=function(item){
-$scope.queryBuilderValidation="";
+	$scope.queryBuilderValidation="";
 	$scope.whereArray[(item*4)+1]=$scope.selectedCondition[item];
 	$scope.makeString();
 };
@@ -203,12 +258,12 @@ $scope.hideAndShow = function(item){
 	}
 };
 $scope.changeInValue=function(item){
-$scope.queryBuilderValidation="";
+	$scope.queryBuilderValidation="";
 	$scope.whereArray[(item*4)+2]=$scope.conditionValue[item];
 	$scope.makeString();
 }
 $scope.addWhereClause = function() {
-$scope.queryBuilderValidation="";
+	$scope.queryBuilderValidation="";
   	whereCount++;
         $scope.buttonname;
      var myEl = angular.element( document.querySelector( '#connectorDiv' ) );
@@ -222,7 +277,23 @@ $scope.queryBuilderValidation="";
 	$scope.whereArray[(whereCount*4)+1]=$scope.selectedCondition[whereCount];
 	$scope.whereArray[(whereCount*4)+2]=$scope.conditionValue[whereCount];
 	$scope.makeString();	
-}
+}/*
+$scope.addJoinClause = function(){
+	$scope.queryBuilderValidation="";
+  	whereCount++;
+   $scope.buttonname;
+   var myEl = angular.element( document.querySelector( '#connectedJoinDiv' ) );
+   myEl.append($compile('<div class="col-md-1"><div class="divJoin"></div></div><div class="col-md-3"><select class="form-control" ng-hide="selectedJoinOpt=='+$scope.joinParams[0]+'" ng-model="firstJoinAttr" ng-change="changeInJoin()" ng-options="value.db+\'.'\+value.attry for value in optionalAttribute"></select></div><div class="col-md-3"><select class="form-control" ng-model="selectedJoinOpt" ng-change="changeInJoin()" ng-options="value for value in joinParams"></select></div><div class="col-md-3"><select class="form-control" ng-hide="selectedJoinOpt=='+$scope.joinParams[0]+'" ng-model="secondJoinAttr" ng-change="changeInJoin()" ng-options="value.db+'.'+value.attry for value in optionalAttribute"></select></div><divclass="col-md-2">X</div>')($scope));  /*   
+	$scope.typeOffiels[whereCount]="text";
+	$scope.selectedWhereAttrArray[whereCount]={"db":"","attry":"1"};
+	$scope.conditionValue[whereCount]="1";
+	$scope.selectedCondition[whereCount]="=";
+	$scope.whereArray[(whereCount*4)-1]="AND";	
+	$scope.whereArray[(whereCount*4)]=$scope.selectedWhereAttrArray[whereCount].attry;
+	$scope.whereArray[(whereCount*4)+1]=$scope.selectedCondition[whereCount];
+	$scope.whereArray[(whereCount*4)+2]=$scope.conditionValue[whereCount];
+	$scope.makeString();	
+};*/
 $scope.removeWhereClause = function(item){
 	var removeWhere = document.getElementById('where'+item);
 	removeWhere.remove(removeWhere);
@@ -266,38 +337,34 @@ $scope.makeString = function(){
 */
 $scope.qNamePlace="Query Name";
 $scope.queryBuilderValidation="";
-$scope.tableBuffer= true;
 $scope.saveAndexecuteQuery = function(){
-$scope.tableBuffer= false;
-$scope.queryBuilderValidation="";
+	$scope.queryBuilderValidation="";
+	
 	if($scope.QueryObject.match("where")) {
 	} else {
 		$scope.QueryObject =$scope.QueryObject+" where "+$scope.whereAsString;
 	}
 	if($scope.QueryName=="")
-        {
+   {
 		$scope.qNamePlace="Please Enter Query Name";
 		document.getElementById("query").className += " formInvalid";
-	}
-	else if($scope.selectedSchema==undefined || $scope.selectedAttribute=="" || $scope.selectedDb=="")
+	}/*
+    else if($scope.selectedSchema==undefined || $scope.selectedAttribute=="" || $scope.selectedDb=="")
         {
-		$scope.queryBuilderValidation="Please be sure you selected all mandatory fields";
-	}
+        $scope.queryBuilderValidation="Please be sure you selected all mandatory fields";
+    }*/
 	else
 	{
-		$scope.queryName11=$scope.QueryName;
-		console.log("queryName11.."+$scope.queryName11);
 		document.getElementById("connection-loading").style.display = 'block';
 		document.getElementById("loadingDiv").style.display = 'block';
+		console.log($scope.QueryObject);
 		DbService.loadingData($scope.QueryObject,$scope.QueryId,$scope.QueryName)
 		.then(function(response){
-		$rootScope.QueryExeVar=true;
-		$scope.tableBuffer= true;
 		document.getElementById("connection-loading").style.display = 'none';
 		document.getElementById("loadingDiv").style.display = 'none';
-                        var responseTableData=response;
-                 	$scope.records=responseTableData;
-               		var i=0;
+       	var responseTableData=response;
+       	$scope.records=responseTableData;
+         var i=0;
 			$scope.result=[];
 			$scope.header=[];
 			angular.forEach($scope.records, function(value, key) {
@@ -314,7 +381,7 @@ $scope.queryBuilderValidation="";
 					});
 	  			});
 			});
-                                
+                  $scope.initQueryLoading();              
 		},function(error){
 			console.log("error in loading data function: "+error.status);
 		});
@@ -322,34 +389,32 @@ $scope.queryBuilderValidation="";
 };
 
 $scope.executeQuery = function(){
-$scope.tableBuffer= false;
-$scope.queryBuilderValidation="";
+	$scope.queryBuilderValidation="";
 		if($scope.QueryObject.match("where")) {
 		} else {
 			$scope.QueryObject = "select row_number() over() as rownum,"+$scope.attrAsString+" from "+$scope.dbAsString+" where "+$scope.whereAsString;
 		}
 		if($scope.QueryName=="")
-          		{
-			$scope.qNamePlace="Please Enter Query Name";
+      {
+         $scope.qNamePlace="Please Enter Query Name";
 			document.getElementById("query").className += " formInvalid";
-			}
-	else if($scope.selectedSchema==undefined || $scope.selectedAttribute=="" || $scope.selectedDb=="")
+       }/*
+    else if($scope.selectedSchema==undefined || $scope.selectedAttribute=="" || $scope.selectedDb=="")
         {
-		$scope.queryBuilderValidation="Please be sure you selected all mandatory fields";
-	}
+        $scope.queryBuilderValidation="Please be sure you selected all mandatory fields";
+    }*/
 		else
 		{
 		document.getElementById("connection-loading").style.display = 'block';
 		document.getElementById("loadingDiv").style.display = 'block';
+		console.log($scope.QueryObject);
 			DbService.loadingData($scope.QueryObject,$scope.QueryId,$scope.QueryName+"^%q6389476625bn423454n2ghf34gy")
 			.then(function(response){
-				$rootScope.QueryExeVar=true;
-				$scope.tableBuffer= true;
 				document.getElementById("connection-loading").style.display = 'none';
 				document.getElementById("loadingDiv").style.display = 'none';
-                                var responseTableData=response;
-                   		$scope.records=responseTableData;
-               			var i=0;
+            var responseTableData=response;
+            $scope.records=responseTableData;
+            var i=0;
 				$scope.result=[];
 				$scope.header=[];
 				angular.forEach($scope.records, function(value, key) {
@@ -377,15 +442,13 @@ $scope.queryBuilderValidation="";
 
 
 $scope.QueryObject = "select row_number() over() as rownum,"+$scope.attrAsString+" from "+$scope.dbAsString;
-$scope.queryBuffer=true;
+
 $scope.initQueryLoading = function(){
-$scope.queryBuffer=false;
 	DbService.getQueryDetails()
 	.then(function(queryData){
 		$scope.Queries=queryData.allQuery;
 		DbService.getConnectionName()
 		.then(function(con_name){
-			$scope.queryBuffer=true;
 			$scope.connection_Nm=con_name.conName;
 		},function(error){
 	    		console.log("failure");
@@ -402,63 +465,52 @@ $scope.queryBuffer=false;
  	});*/
 };
 $scope.getQueryName = function(value){
+	$scope.records=null;
 	$scope.queryName=value.query_name;
 	$scope.QueryName=$scope.queryName;
 	$scope.QueryObject=value.query;
 	$scope.QueryId = value.query_id;
-	$scope.records=null; //_______________________________________________
 	if(value.reports_per_query!="")
 		$scope.Reports=value.reports_per_query.split(',');
 };
-
+$scope.newChartInit=0;
+$scope.showNewChart = function(){
+    if($scope.newChartInit==0){
+        $scope.newChartInit++;
+        $scope.Reports.push("new report");
+    }
+};
 $scope.clearQuery = function(){
+	$scope.records=null;
 	$scope.QueryName="";
 	$scope.QueryObject="";
 	$scope.QueryId = 0;
-	$scope.records=null;//_______________________________________________
 };
 
 //_______________________________________________
-$scope.nameCheck =false;
+
 $scope.checkQueryName = function(QueryName){
-	angular.forEach($scope.Queries, function(value) {
-  		if(value.query_name === QueryName)
-		{
-			console.log(".."+value.query_name+"...."+QueryName);
-			$scope.nameCheck =true;	
+    angular.forEach($scope.Queries, function(value) {
+        if(value.query_name === QueryName)
+        {
+            console.log(".."+value.query_name+"...."+QueryName);
+            $scope.nameCheck =true; 
 return;
-			console.log("nameCheck"+$scope.nameCheck);
-				/*document.getElementById("nameAlert").style.display='block';
-				$timeout(function () { document.getElementById("nameAlert").style.display='none'; }, 1000);*/
-		}
-		
-	});	
-
+            console.log("nameCheck"+$scope.nameCheck);
+                /*document.getElementById("nameAlert").style.display='block';
+                $timeout(function () { document.getElementById("nameAlert").style.display='none'; }, 1000);*/
+        }
+        
+    }); 
+ 
 };
-
 $scope.navigateToChart=function(){
 	$scope.selection1='link2';
 };
 //_____________________________________________________
-$scope.newChartVar = false;
-$scope.showChartDetails = false;
-$scope.newChart=function(){
-console.log("newChartVar.."+$scope.newChartVar);
-
-if($rootScope.QueryExeVar == true)
-{
-	$scope.newChartVar = true;
-	$("#main-chart-div").html("");
-}
-else
-	$scope.showChartDetails = false;
-
-
-};
 
 
 $scope.displayChartFromReport = function(reportName){
-$scope.newChartVar = false;
 	DbService.getChartFromReport(reportName)
 	.then(function(chartData){
 		//$scope.hideAndShow(1); //___________________________________
@@ -466,9 +518,9 @@ $scope.newChartVar = false;
 		$scope.chartdrilldata = JSON.stringify(chartData.drillDownModel);
 		$scope.reportName = JSON.stringify(chartData.reportName);
 		$scope.type = JSON.stringify(chartData.chartType);
-		
+
 		$("#main-chart-div").html("<bar-chart class='span12' type='"+chartData.chartType+"' divid='container2' width=728 height=400 title='' subtitle='Click the columns to view versions.' data='" + $scope.chartdata + "' drilldowndata='" + $scope.chartdrilldata + "'></bar-chart>");
-		
+
 	},function(error){
     		console.log("failure on chart rendering");
  	});
@@ -528,7 +580,6 @@ $scope.delete_ChartReport = function(report_Name) {
 	$( "#deleteChartDiv"+report_Name).slideUp();
 };
 
-
 /*$scope.delete_ChartReport_Confirmation = function(report_Name){
 	
 	$( "#deleteButton2").click(function() {
@@ -557,7 +608,6 @@ $scope.delete_ChartReport = function(report_Name){
 
 $scope.QueryId=0;
 $scope.QueryName="";
-
 //start of chart geneartion. . . . .
 $scope.charttitle = "";
     	$scope.chartdata = "";
@@ -633,16 +683,15 @@ $scope.charttitle = "";
     var index=0;
 var x=10;
 
-$scope.chartBuffer= true;
+
+//$("#ok_button").click(function () {
 $scope.generateChart = function(){
-	$scope.chartBuffer= false;
 	var xaxis = $("#sel1").val();
    var yaxis = $("#sel2").val();
 	var drilldown = $("#sel4").val();
 	var chartType = $("#sel3").val();
    DbService.getChartData(xaxis, yaxis, drilldown, chartType)
    .then(function(chartData){
-		$scope.chartBuffer= true;
 		$scope.chart_Data=chartData;
 		$scope.chartdata = JSON.stringify(chartData.mainJSON);
      		$scope.chartdrilldata = JSON.stringify(chartData.drillDownModel);
@@ -660,14 +709,14 @@ $("#main-chart-div").html("<bar-chart class='span12' type='"+$scope.chartType+"'
 				$( "#main-chart-div").slideUp();
 				});
 			$( "#save").click(function(){
-				
+
 				if($scope.saveFlag==false)
 				{
 					DbService.getSavedChartReport($scope.chart_Data)
 					.then(function(response){
 						$scope.savingStatus="Saved";
 						$scope.saveFlag=true;
-						
+
 					}, function(error){
 		      				alert("Saving...Failure"+error.status);
 						$scope.savingStatus="Failed";
@@ -675,7 +724,7 @@ $("#main-chart-div").html("<bar-chart class='span12' type='"+$scope.chartType+"'
 				}
 				else
 					$scope.savingStatus="Chart is already Saved!";
-   			 })
+   			 });
 
 			var dialog = document.getElementById("dropdown");
   				 if (dialog) {
@@ -684,7 +733,7 @@ $("#main-chart-div").html("<bar-chart class='span12' type='"+$scope.chartType+"'
 
 
 });
- }; 
+ };
 
 //End of chart generation . . . .
 
@@ -693,3 +742,4 @@ $("#main-chart-div").html("<bar-chart class='span12' type='"+$scope.chartType+"'
 
 }]);
 });
+

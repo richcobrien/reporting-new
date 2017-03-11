@@ -3,7 +3,7 @@ define(['./sample-module', './sample-directive', './sample-filter',
 './sample-controller', './predix-asset-service',
 './predix-user-service', './predix-view-service',
 './chart-generation-controller','./db-controller', 
-'./db-service', './query-modeller-controller','./Dashboard-controller','./report-wizard','./demoC','./drager-controller'], function() {
+'./db-service', './query-modeller-controller','./Dashboard-controller','./report-wizard','./demoC','./drager-controller','./draggablerepwiz-controller'], function() {
 
 
 });
